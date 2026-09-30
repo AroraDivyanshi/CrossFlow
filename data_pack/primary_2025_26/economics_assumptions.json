@@ -1,0 +1,31 @@
+{
+  "_purpose": "DEMO-mode-only coefficients for the Economic + Lifecycle Impact Engine (engine/economics.py). Every value here is ASSUMPTION-tagged with a rationale. None of this is official Delhi data. VALIDATED mode must never read this file.",
+
+  "power_tariff_rs_per_kwh": {
+    "state": "ASSUMPTION", "value": 7.08,
+    "evidence": "Historical DERC-mandated WTE power purchase tariff cited in a 2016-17 press report on the Narela-Bawana plant (provenance.csv row P28), applied here as a proxy for FY2025-26 despite being ~9 years old and specific to one plant/PPA. Production replacement: current DISCOM PPA tariffs per plant."
+  },
+  "compost_price_rs_per_tonne": {
+    "state": "ASSUMPTION", "value": 3000,
+    "evidence": "Generic market-rate placeholder for municipal compost sold or transferred to horticulture use, within the range commonly cited for city compost schemes in Indian secondary literature. Not a Delhi-specific measured price. Production replacement: MCD/DDA compost offtake or sale price."
+  },
+
+  "transport_emission_factor_kg_co2_per_tonne_km": {
+    "state": "ASSUMPTION", "value": 0.12,
+    "evidence": "Generic diesel municipal-waste-truck emission factor commonly cited in Indian SWM lifecycle studies (order of magnitude 0.1-0.15 kgCO2/tonne-km for urban collection trucks). Not measured for MCD's actual fleet. Production replacement: MCD fleet fuel-consumption-based factor or IPCC/India GHG Program transport factors."
+  },
+  "landfill_emission_factor_tco2e_per_tonne": {
+    "state": "ASSUMPTION", "value": 0.9,
+    "evidence": "Illustrative order-of-magnitude placeholder for landfill methane emissions per tonne of untreated mixed MSW landfilled (loosely in line with IPCC default methane-generation-potential ranges for MSW landfills, NOT a computed IPCC Tier 1/2 estimate for Delhi's specific waste composition, climate, or landfill management practice). Production replacement: a proper IPCC Tier 2 calculation using Delhi-specific waste composition, climate zone and landfill management data."
+  },
+  "wte_processing_emission_factor_tco2e_per_tonne": {
+    "state": "ASSUMPTION", "value": 0.4,
+    "evidence": "Illustrative placeholder for net direct combustion CO2 emissions per tonne of mixed MSW processed at a WTE facility (fossil-carbon fraction of the waste, primarily plastics). Not derived from any Delhi plant's stack-monitoring data. Excludes any credit for the power generated (that is handled separately as recovered-resource value, not an emissions offset, to avoid double-counting benefit)."
+  },
+  "compost_processing_emission_factor_tco2e_per_tonne": {
+    "state": "ASSUMPTION", "value": 0.05,
+    "evidence": "Illustrative small placeholder for aerobic composting process emissions (mostly N2O/CH4 from imperfect aeration), an order of magnitude below the landfill factor above, consistent with the general SWM-literature finding that aerobic composting emits far less than anaerobic landfilling for the same input tonnage. Not measured."
+  },
+
+  "modelled_impact_caveat": "All emissions and 'avoided impact' figures in economics.py are MODELLED using the illustrative factors above, not measured stack or landfill-gas data. They should be read as an order-of-magnitude prototype illustration of the direction and rough scale of impact, not a certified GHG inventory."
+}

@@ -1,0 +1,40 @@
+{
+  "_purpose": "Auditable thresholds/constants for the transparent, rule-based Waste Recipe Engine (engine/recipe.py). These are generic solid-waste-management engineering rules of thumb cited in widely used SWM technical literature (e.g. CPHEEO Manual on Municipal Solid Waste Management, and common composting/biomethanation/WTE design guidance) -- NOT Delhi-specific measured parameters. Treat every threshold as ASSUMPTION-class if used in a Delhi-specific report; this engine's job is to be transparent and auditable, not to claim official status.",
+
+  "composting": {
+    "min_organic_fraction": 0.50,
+    "moisture_range_pct": [40, 65],
+    "cn_ratio_range": [20, 30],
+    "max_contamination_pct": 10,
+    "evidence": "Standard windrow/pit composting design ranges cited in CPHEEO-style SWM guidance: organic fraction >=50% for viable throughput, moisture 40-65% (below is too dry to compost, above turns anaerobic/smelly), C/N 20:30 is the classic ideal decomposition ratio, contamination (plastic/inert) tolerance up to ~10% before it materially degrades compost quality."
+  },
+  "biomethanation": {
+    "min_organic_fraction": 0.60,
+    "moisture_range_pct": [60, 90],
+    "cn_ratio_range": [20, 30],
+    "max_contamination_pct": 5,
+    "evidence": "Wet anaerobic digestion needs a pumpable, high-moisture, high-organic feedstock; contamination tolerance is tighter than composting because grit/plastic damages digesters and reduces gas yield."
+  },
+  "waste_to_energy": {
+    "max_moisture_pct": 50,
+    "min_dry_combustible_fraction": 0.50,
+    "max_contamination_note": "WTE tolerates mixed/contaminated waste better than biological methods, but high moisture lowers net calorific value and can require auxiliary fuel.",
+    "evidence": "Mass-burn WTE generally needs waste below ~50% moisture and a majority dry/combustible fraction to sustain combustion without excessive auxiliary fuel -- a widely cited rule of thumb in Indian WTE feasibility studies, not a specific plant's measured specification."
+  },
+  "rdf": {
+    "max_moisture_pct": 35,
+    "min_dry_combustible_fraction": 0.60,
+    "evidence": "Refuse-derived fuel production requires drier, more calorific input than raw mass-burn WTE since RDF is meant to be storable/transportable fuel."
+  },
+
+  "scoring": {
+    "method": "Each method scores 0-100 on how far the feedstock sits inside vs outside its threshold ranges. A value inside range scores full marks for that factor; each factor outside range subtracts a proportional penalty capped so the score cannot go below 0. Category bands: >=70 Compatible, 40-69 Marginal, <40 Incompatible.",
+    "compatible_min": 70,
+    "marginal_min": 40,
+    "confidence_bands": {
+      "high_min_fraction_evaluated": 0.75,
+      "medium_min_fraction_evaluated": 0.4,
+      "evidence": "Confidence reflects how much of a method's factor set was actually scoreable from the supplied feedstock profile, not the quality of the score itself. A score computed from 1 of 4 factors (e.g. moisture only, for WTE) is LOW confidence even if that one factor scores perfectly -- the other factors are simply unknown, not assumed favourable."
+    }
+  }
+}

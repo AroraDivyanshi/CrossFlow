@@ -1,0 +1,47 @@
+{
+  "_purpose": "DEMO-mode-only output-yield and demand-node assumptions for the output-first matching feature. None of this is FY2025-26 official data -- yields are back-calculated from OLDER, historical MW/TPD figures already logged in provenance.csv (dated 2016-2021), applied here as a rough proxy to the FY2025-26 facility subset. Demand figures are illustrative placeholders. VALIDATED mode must never read this file.",
+
+  "yields": {
+    "_evidence": "Power yield (MWh per tonne processed) derived from historical capacity/MW pairs: Narela-Bawana 2000 TPD / 24 MW (P11, DPCC AR 2021-22) -> 24MW*24h/2000t = 0.288 MWh/tonne; Ghazipur 1300 TPD authorised / 12 MW (P36, HT 2016) -> 12*24/1300 = 0.222 MWh/tonne; Okhla historical ~16 MW at ~1950 TPD context (P33 excerpt mentions 59 MW combined across 3 plants at 5250 TPD ~ 0.27 MWh/t average). A single rounded rate of 0.25 MWh/tonne is applied to all four FY2025-26 subset facilities as a common proxy -- technology and vintage differences are real and not captured. Production replacement: plant-level SCADA generation logs.",
+    "OKHLA_WTE": {"state": "ASSUMPTION", "output_type": "power_mwh", "value": 0.25, "evidence": "Historical-proxy WTE yield rate, see yields._evidence. Not an Okhla-specific FY2025-26 figure."},
+    "NARELA_BAWANA_INTEGRATED": {"state": "ASSUMPTION", "output_type": "power_mwh", "value": 0.25, "evidence": "Same historical-proxy rate; also ignores that this facility is labelled 'integrated' (non-WTE portion, if any, produces no power under this assumption)."},
+    "GHAZIPUR_WTE": {"state": "ASSUMPTION", "output_type": "power_mwh", "value": 0.25, "evidence": "Same historical-proxy rate."},
+    "TEHKHAND_WTE": {"state": "ASSUMPTION", "output_type": "power_mwh", "value": 0.25, "evidence": "Same historical-proxy rate."},
+    "DECENTRALISED_COMPOST": {"state": "ASSUMPTION", "output_type": "compost_tonnes", "value": 0.30, "evidence": "Generic assumed compost yield of 30% by mass of wet organic input processed via compost pits/composters -- a commonly cited rule-of-thumb range (25-35%), not a Delhi-specific measured figure. Applied only to the decentralised installed-capacity tonnage, not to any WTE facility."}
+  },
+
+  "power_supply_source": {
+    "_note": "Power supply is computed from result.tonnes_allocated_tpd for the 4 WTE/integrated facilities using the yields above -- NOT from decentralised aggregates.",
+    "applies_to_facility_ids": ["OKHLA_WTE", "NARELA_BAWANA_INTEGRATED", "GHAZIPUR_WTE", "TEHKHAND_WTE"]
+  },
+
+  "decentralised_compost_source": {
+    "_evidence": "Decentralised compost output is computed from the network snapshot's KNOWN installed capacity (composters 20 TPD + compost pits 20 TPD = 40 TPD, Statement 14.10, network_2025_26.json) -- NOT from the separately-reported 558 TPD throughput figure, per the frozen snapshot's own do-not-combine rule. An operating-rate assumption is required to turn installed capacity into an assumed daily input, since no actual throughput figure is usable for this purpose without conflating metrics.",
+    "operating_rate_assumed": {"state": "ASSUMPTION", "value": 1.0,
+      "evidence": "Assumes decentralised composters/pits run at 100% of installed capacity (40 TPD organic input/day). This is a simplifying prototype assumption, not a measured utilisation rate -- the survey's own 558 TPD throughput figure for compost pits alone already exceeds this installed-capacity reading by more than 10x, which is exactly the kind of metric conflict the network snapshot flags (see conflicts.csv, C26) and which this assumption deliberately does not try to resolve."},
+    "source_coordinates": {"state": "ASSUMPTION", "lat": 28.65, "lon": 77.20,
+      "evidence": "Decentralised composting is spread across many small sites citywide; no single real coordinate exists. This is a Delhi-centroid placeholder for demo mapping only, not a facility location."}
+  },
+
+  "demand_nodes": [
+    {
+      "id": "DISCOM_GRID",
+      "output_type": "power_mwh",
+      "demand_quantity_per_day": {"state": "ASSUMPTION", "value": 100000,
+        "evidence": "Set deliberately far above any plausible WTE output from this network so the grid is effectively an unconstrained offtaker, consistent with the real (historical) fact that DISCOMs are mandated to purchase WTE power under PPAs (P28: BYPL/Tata Power agreements at fixed tariffs) -- not a measured FY2025-26 demand figure."},
+      "coords": {"lat": 28.6139, "lon": 77.2090}
+    },
+    {
+      "id": "MCD_PARKS_HORTICULTURE",
+      "output_type": "compost_tonnes",
+      "demand_quantity_per_day": {"state": "ASSUMPTION", "value": 150,
+        "evidence": "Illustrative placeholder for Delhi parks/horticulture compost offtake capacity. No official figure found. Deliberately set BELOW likely decentralised compost supply so the demo can show a genuine unmet-output case, not just a trivially satisfied one."},
+      "coords": {"lat": 28.6129, "lon": 77.2295}
+    }
+  ],
+
+  "transport_cost_rs_per_tonne_km_output": {
+    "state": "ASSUMPTION", "value": 3.5,
+    "evidence": "Same generic haulage-cost proxy as the main network's transport_cost_rs_per_tonne_km assumption (demo_assumptions.json); applied here to compost only (power is wheeled via the electrical grid, not trucked, so no transport cost is modelled for power_mwh)."
+  }
+}

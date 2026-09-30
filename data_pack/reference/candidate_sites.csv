@@ -1,0 +1,8 @@
+candidate_id,site,action,capacity_tpd,plan_source,capex,technology,provenance_ids
+C01,Bhalswa,BUILD,1800,MCD Mayor (P22),"UNAVAILABLE per site (aggregate only, P23)",not stated,P22;P23
+C02,Singhola,BUILD,700,MCD Mayor (P22),UNAVAILABLE per site,not stated,P22;P23
+C03,Okhla,BUILD,1400,MCD Mayor (P22),UNAVAILABLE per site,not stated,P22;P23
+C04,Narela-Bawana,BUILD,1200 (P22) vs 3000 by Dec 2027 (P21),conflicting plans,UNAVAILABLE per site,not stated,P21;P22
+C05,Ghazipur,BUILD,2000 by Dec 2028,Pioneer survey (P21),UNAVAILABLE,not stated,P21
+C06,Okhla WTE,RETROFIT/EXPAND,+1000 to 2950 by 2027,P21,UNAVAILABLE,WTE,P21
+C07,Tehkhand WTE,RETROFIT/EXPAND,+1000 to 3000 by 2027,P21,UNAVAILABLE,WTE,P21

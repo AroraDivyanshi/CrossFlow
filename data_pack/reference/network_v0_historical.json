@@ -1,0 +1,233 @@
+{
+ "snapshot": {
+  "certified_year": null,
+  "note": "NOT CERTIFIED: source-node year unknown and unlocated (U1)"
+ },
+ "source_nodes": [
+  {
+   "id": "N",
+   "name": "Erstwhile North DMC area",
+   "generation_tpd": {
+    "state": "PENDING_VERIFICATION",
+    "value": 4500,
+    "year": null,
+    "provenance": [
+     "U1"
+    ],
+    "evidence": "USER-REPORTED-UNLOCATED"
+   },
+   "centroid": {
+    "state": "UNKNOWN",
+    "value": null,
+    "year": null,
+    "provenance": [],
+    "evidence": ""
+   }
+  },
+  {
+   "id": "E",
+   "name": "Erstwhile East DMC area",
+   "generation_tpd": {
+    "state": "PENDING_VERIFICATION",
+    "value": 2600,
+    "year": null,
+    "provenance": [
+     "U1"
+    ],
+    "evidence": "USER-REPORTED-UNLOCATED"
+   },
+   "centroid": {
+    "state": "UNKNOWN",
+    "value": null,
+    "year": null,
+    "provenance": [],
+    "evidence": ""
+   }
+  },
+  {
+   "id": "S",
+   "name": "Erstwhile South DMC area",
+   "generation_tpd": {
+    "state": "PENDING_VERIFICATION",
+    "value": 3600,
+    "year": null,
+    "provenance": [
+     "U1",
+     "P38"
+    ],
+    "evidence": "USER-REPORTED-UNLOCATED; loosely corroborated by press ~2022"
+   },
+   "centroid": {
+    "state": "UNKNOWN",
+    "value": null,
+    "year": null,
+    "provenance": [],
+    "evidence": ""
+   }
+  }
+ ],
+ "facility_nodes": [
+  {
+   "id": "OKHLA_WTE",
+   "status": "operating",
+   "capacity_tpd": {
+    "state": "KNOWN",
+    "value": 1950,
+    "year": "30.09.2020; FY2021-22",
+    "provenance": [
+     "P10",
+     "P33",
+     "P34",
+     "U2"
+    ],
+    "evidence": "PRIMARY-EXCERPT"
+   },
+   "load_tpd": {
+    "state": "UNKNOWN",
+    "value": null,
+    "year": null,
+    "provenance": [],
+    "evidence": ""
+   },
+   "proc_cost_rs_t": {
+    "state": "UNKNOWN",
+    "value": null,
+    "year": null,
+    "provenance": [],
+    "evidence": ""
+   },
+   "coords": {
+    "state": "UNKNOWN",
+    "value": null,
+    "year": null,
+    "provenance": [],
+    "evidence": ""
+   }
+  },
+  {
+   "id": "GHAZIPUR_WTE",
+   "status": "UNRESOLVED",
+   "capacity_tpd": {
+    "state": "KNOWN",
+    "value": 1300,
+    "year": "30.09.2020; FY2021-22",
+    "provenance": [
+     "P12",
+     "P33",
+     "P34",
+     "P36",
+     "U2"
+    ],
+    "evidence": "PRIMARY-EXCERPT"
+   },
+   "load_tpd": {
+    "state": "UNKNOWN",
+    "value": null,
+    "year": null,
+    "provenance": [],
+    "evidence": ""
+   },
+   "proc_cost_rs_t": {
+    "state": "UNKNOWN",
+    "value": null,
+    "year": null,
+    "provenance": [],
+    "evidence": ""
+   },
+   "coords": {
+    "state": "UNKNOWN",
+    "value": null,
+    "year": null,
+    "provenance": [],
+    "evidence": ""
+   }
+  },
+  {
+   "id": "TEHKHAND_WTE",
+   "status": "UNRESOLVED",
+   "capacity_tpd": {
+    "state": "KNOWN",
+    "value": 2000,
+    "year": "FY2021-22 (under construction)",
+    "provenance": [
+     "P24",
+     "P34",
+     "U2"
+    ],
+    "evidence": "PRIMARY-EXCERPT"
+   },
+   "load_tpd": {
+    "state": "UNKNOWN",
+    "value": null,
+    "year": null,
+    "provenance": [],
+    "evidence": ""
+   },
+   "proc_cost_rs_t": {
+    "state": "UNKNOWN",
+    "value": null,
+    "year": null,
+    "provenance": [],
+    "evidence": ""
+   },
+   "coords": {
+    "state": "UNKNOWN",
+    "value": null,
+    "year": null,
+    "provenance": [],
+    "evidence": ""
+   }
+  },
+  {
+   "id": "NARELA_BAWANA_WTE",
+   "status": "operating",
+   "capacity_tpd": {
+    "state": "UNRESOLVED",
+    "value": null,
+    "year": null,
+    "provenance": [
+     "P11",
+     "P33",
+     "P34",
+     "U2"
+    ],
+    "evidence": "conflict C15"
+   },
+   "load_tpd": {
+    "state": "UNKNOWN",
+    "value": null,
+    "year": null,
+    "provenance": [],
+    "evidence": ""
+   },
+   "proc_cost_rs_t": {
+    "state": "UNKNOWN",
+    "value": null,
+    "year": null,
+    "provenance": [],
+    "evidence": ""
+   },
+   "coords": {
+    "state": "UNKNOWN",
+    "value": null,
+    "year": null,
+    "provenance": [],
+    "evidence": ""
+   }
+  }
+ ],
+ "distances_km": {
+  "state": "UNKNOWN",
+  "value": null,
+  "year": null,
+  "provenance": [],
+  "evidence": ""
+ },
+ "transport_rs_per_tkm": {
+  "state": "UNKNOWN",
+  "value": null,
+  "year": null,
+  "provenance": [],
+  "evidence": ""
+ }
+}

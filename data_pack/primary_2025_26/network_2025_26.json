@@ -1,0 +1,512 @@
+{
+ "dataset_label": "FY2025-26 official Delhi baseline + verified subset of facility nodes.",
+ "snapshot_id": "DELHI_2025_26_PRIMARY",
+ "baseline_status": "CURRENT_OFFICIAL_WITH_INTERNAL_CONFLICT",
+ "period": "FY2025-26; Economic Survey of Delhi 2025-26 (presented Mar 2026)",
+ "rules": [
+  "No values from 2021-22, 2023-24 or FY2024-25 datasets are used here",
+  "Generation and city totals from Statement 8.4; facility capacities from Statement 14.10",
+  "City-level reference metrics are NOT assumed to equal the sum of identified facility nodes",
+  "Conflicts are attached to values, not silently resolved",
+  "No fabricated zone generation, facility load, transport cost, coordinates, or demand"
+ ],
+ "source_nodes": [
+  {
+   "id": "MCD",
+   "name": "Municipal Corporation of Delhi (250 wards, 12 zones)",
+   "generation_tpd": {
+    "state": "KNOWN",
+    "value": 11500,
+    "year": "FY2025-26",
+    "provenance": [
+     "S01",
+     "M01",
+     "P32"
+    ],
+    "evidence": "USER-VERIFIED-OFFICIAL-PDF (assistant could not open the PDF itself); press-corroborated",
+    "conflict_ids": [
+     "C22"
+    ]
+   },
+   "centroid": {
+    "state": "UNKNOWN",
+    "value": null,
+    "year": null,
+    "provenance": [],
+    "evidence": "",
+    "conflict_ids": []
+   },
+   "zones": {
+    "state": "UNKNOWN",
+    "value": null,
+    "year": null,
+    "provenance": [],
+    "evidence": "",
+    "conflict_ids": []
+   }
+  },
+  {
+   "id": "NDMC",
+   "name": "New Delhi Municipal Council",
+   "generation_tpd": {
+    "state": "KNOWN",
+    "value": 300,
+    "year": "FY2025-26",
+    "provenance": [
+     "S02",
+     "P32"
+    ],
+    "evidence": "USER-VERIFIED-OFFICIAL-PDF (assistant could not open the PDF itself); press-corroborated",
+    "conflict_ids": []
+   },
+   "centroid": {
+    "state": "UNKNOWN",
+    "value": null,
+    "year": null,
+    "provenance": [],
+    "evidence": "",
+    "conflict_ids": []
+   }
+  },
+  {
+   "id": "DCB",
+   "name": "Delhi Cantonment Board",
+   "generation_tpd": {
+    "state": "KNOWN",
+    "value": 62,
+    "year": "FY2025-26",
+    "provenance": [
+     "S03",
+     "P32"
+    ],
+    "evidence": "USER-VERIFIED-OFFICIAL-PDF (assistant could not open the PDF itself); press-corroborated",
+    "conflict_ids": []
+   },
+   "centroid": {
+    "state": "UNKNOWN",
+    "value": null,
+    "year": null,
+    "provenance": [],
+    "evidence": "",
+    "conflict_ids": []
+   }
+  }
+ ],
+ "city_reference_metrics": {
+  "_note": "City-level reported metrics. Each is its OWN reported figure, not a derived sum of the facility_nodes below. Do not cross-check by summing facility nodes into these.",
+  "generation_tpd": {
+   "state": "KNOWN",
+   "value": 11862,
+   "year": "FY2025-26",
+   "provenance": [
+    "S04",
+    "M01",
+    "P32"
+   ],
+   "evidence": "Statement 8.4 total; press-corroborated; = MCD+NDMC+DCB (D2 passes)",
+   "conflict_ids": []
+  },
+  "installed_capacity_tpd": {
+   "state": "PENDING_VERIFICATION",
+   "value": 7641,
+   "year": "FY2025-26",
+   "provenance": [
+    "M01",
+    "P32"
+   ],
+   "evidence": "Reported only in press coverage of the survey (Millennium Post, Daily Pioneer); not yet seen in a numbered Statement. Metric definition: 'installed processing capacity', city-wide, all technologies and scales.",
+   "conflict_ids": [
+    "C27"
+   ]
+  },
+  "actual_reported_processing_tpd": {
+   "state": "PENDING_VERIFICATION",
+   "value": 7460.3,
+   "year": "FY2025-26",
+   "provenance": [
+    "P32"
+   ],
+   "evidence": "Press only (Hans India, quoting the survey); metric definition: actual tonnes processed per day, distinct from installed capacity above.",
+   "conflict_ids": []
+  },
+  "processing_gap_note": "11862 - 7641 = 4221 (press rounds to '~4200'); 11862 - 7460.3 = 4401.7 (actual, not installed, gap). These are two different gaps depending on which capacity metric is used."
+ },
+ "facility_subset": {
+  "_note": "FACILITY SUBSET: the four identified WTE facilities from Statement 14.10. This subset's sum (7250) is NOT expected to equal installed_capacity_tpd (7641) above -- see conflict C24. Do not treat 7641 as a target that these four nodes must reconcile to.",
+  "nodes": [
+   {
+    "id": "OKHLA_WTE",
+    "technology": "waste_to_energy",
+    "status": "UNKNOWN",
+    "capacity_tpd": {
+     "state": "KNOWN",
+     "value": 1550,
+     "year": "FY2025-26",
+     "provenance": [
+      "S08"
+     ],
+     "evidence": "USER-VERIFIED-OFFICIAL-PDF (assistant could not open the PDF itself)",
+     "conflict_ids": [
+      "C23",
+      "C24"
+     ]
+    },
+    "load_tpd": {
+     "state": "UNKNOWN",
+     "value": null,
+     "year": null,
+     "provenance": [],
+     "evidence": "",
+     "conflict_ids": []
+    },
+    "proc_cost_rs_t": {
+     "state": "UNKNOWN",
+     "value": null,
+     "year": null,
+     "provenance": [],
+     "evidence": "",
+     "conflict_ids": []
+    },
+    "coords": {
+     "state": "UNKNOWN",
+     "value": null,
+     "year": null,
+     "provenance": [],
+     "evidence": "",
+     "conflict_ids": []
+    }
+   },
+   {
+    "id": "NARELA_BAWANA_INTEGRATED",
+    "technology": "integrated facility (WTE + other; composition of the 2400 TPD not stated)",
+    "status": "UNKNOWN",
+    "capacity_tpd": {
+     "state": "KNOWN",
+     "value": 2400,
+     "year": "FY2025-26",
+     "provenance": [
+      "S09"
+     ],
+     "evidence": "USER-VERIFIED-OFFICIAL-PDF (assistant could not open the PDF itself); labelled 'integrated facility' in the source table -- may not be WTE-only capacity",
+     "conflict_ids": [
+      "C24",
+      "C25"
+     ]
+    },
+    "load_tpd": {
+     "state": "UNKNOWN",
+     "value": null,
+     "year": null,
+     "provenance": [],
+     "evidence": "",
+     "conflict_ids": []
+    },
+    "proc_cost_rs_t": {
+     "state": "UNKNOWN",
+     "value": null,
+     "year": null,
+     "provenance": [],
+     "evidence": "",
+     "conflict_ids": []
+    },
+    "coords": {
+     "state": "UNKNOWN",
+     "value": null,
+     "year": null,
+     "provenance": [],
+     "evidence": "",
+     "conflict_ids": []
+    }
+   },
+   {
+    "id": "GHAZIPUR_WTE",
+    "technology": "waste_to_energy",
+    "status": "UNKNOWN",
+    "capacity_tpd": {
+     "state": "KNOWN",
+     "value": 1300,
+     "year": "FY2025-26",
+     "provenance": [
+      "S10"
+     ],
+     "evidence": "USER-VERIFIED-OFFICIAL-PDF (assistant could not open the PDF itself)",
+     "conflict_ids": []
+    },
+    "load_tpd": {
+     "state": "UNKNOWN",
+     "value": null,
+     "year": null,
+     "provenance": [],
+     "evidence": "",
+     "conflict_ids": []
+    },
+    "proc_cost_rs_t": {
+     "state": "UNKNOWN",
+     "value": null,
+     "year": null,
+     "provenance": [],
+     "evidence": "",
+     "conflict_ids": []
+    },
+    "coords": {
+     "state": "UNKNOWN",
+     "value": null,
+     "year": null,
+     "provenance": [],
+     "evidence": "",
+     "conflict_ids": []
+    }
+   },
+   {
+    "id": "TEHKHAND_WTE",
+    "technology": "waste_to_energy",
+    "status": "UNKNOWN",
+    "capacity_tpd": {
+     "state": "KNOWN",
+     "value": 2000,
+     "year": "FY2025-26",
+     "provenance": [
+      "S11"
+     ],
+     "evidence": "USER-VERIFIED-OFFICIAL-PDF (assistant could not open the PDF itself)",
+     "conflict_ids": []
+    },
+    "load_tpd": {
+     "state": "UNKNOWN",
+     "value": null,
+     "year": null,
+     "provenance": [],
+     "evidence": "",
+     "conflict_ids": []
+    },
+    "proc_cost_rs_t": {
+     "state": "UNKNOWN",
+     "value": null,
+     "year": null,
+     "provenance": [],
+     "evidence": "",
+     "conflict_ids": []
+    },
+    "coords": {
+     "state": "UNKNOWN",
+     "value": null,
+     "year": null,
+     "provenance": [],
+     "evidence": "",
+     "conflict_ids": []
+    }
+   }
+  ],
+  "sum_of_subset_tpd": {
+   "state": "DERIVED",
+   "value": 7250,
+   "year": "FY2025-26",
+   "provenance": [
+    "S08",
+    "S09",
+    "S10",
+    "S11"
+   ],
+   "evidence": "1550+2400+1300+2000=7250. This is a sum over 4 named facilities only, not a city total.",
+   "conflict_ids": [
+    "C24"
+   ]
+  }
+ },
+ "okhla_compost_plant": {
+  "id": "OKHLA_COMPOST",
+  "status": {
+   "state": "PENDING_VERIFICATION",
+   "value": null,
+   "year": null,
+   "provenance": [],
+   "evidence": "The user's message described this capacity figure in the context of a Bio-CNG project replacing 'the existing closed 200 TPD compost plant'. That description is the only status information available. It has NOT been confirmed that the official table itself states the plant's status as closed -- it may be an incidental description rather than a reported field. Do not treat as KNOWN closed until the source statement's exact wording is checked.",
+   "conflict_ids": []
+  },
+  "old_capacity_tpd": {
+   "state": "PENDING_VERIFICATION",
+   "value": 200,
+   "year": null,
+   "provenance": [
+    "S16"
+   ],
+   "evidence": "Same caveat as status: figure appears inside the Bio-CNG proposal description, not confirmed as its own table row.",
+   "conflict_ids": []
+  }
+ },
+ "decentralised_processing": {
+  "_note": "Two different metrics appear across sources and must not be combined: INSTALLED CAPACITY (Statement 14.10, per user) vs REPORTED THROUGHPUT (press, citing the same survey's decentralised-processing section). They may describe the same facilities at different points in time, differently scoped facility counts, or simply be inconsistent -- undetermined. Treated as two separate series pending the source tables.",
+  "installed_capacity_tpd": {
+   "composters": {
+    "state": "KNOWN",
+    "value": 20,
+    "year": "FY2025-26",
+    "provenance": [
+     "S12"
+    ],
+    "evidence": "USER-VERIFIED-OFFICIAL-PDF (assistant could not open the PDF itself)",
+    "conflict_ids": [
+     "C26"
+    ]
+   },
+   "compost_pits": {
+    "state": "KNOWN",
+    "value": 20,
+    "year": "FY2025-26",
+    "provenance": [
+     "S13"
+    ],
+    "evidence": "USER-VERIFIED-OFFICIAL-PDF (assistant could not open the PDF itself)",
+    "conflict_ids": [
+     "C26"
+    ]
+   },
+   "mrf": {
+    "state": "KNOWN",
+    "value": 252,
+    "year": "FY2025-26",
+    "provenance": [
+     "S14"
+    ],
+    "evidence": "USER-VERIFIED-OFFICIAL-PDF (assistant could not open the PDF itself)",
+    "conflict_ids": [
+     "C26"
+    ]
+   }
+  },
+  "reported_throughput_tpd": {
+   "compost_pits": {
+    "state": "KNOWN",
+    "value": 558,
+    "year": "FY2025-26",
+    "provenance": [
+     "M02"
+    ],
+    "evidence": "Press (Daily Pioneer), citing the survey: '257 compost pits handling about 558 tonnes per day'",
+    "conflict_ids": [
+     "C26"
+    ]
+   },
+   "mrf": {
+    "state": "KNOWN",
+    "value": 293,
+    "year": "FY2025-26",
+    "provenance": [
+     "M02"
+    ],
+    "evidence": "Press (Daily Pioneer), citing the survey: 'material recovery facilities recycling around 293 tonnes daily'",
+    "conflict_ids": [
+     "C26"
+    ]
+   },
+   "compost_pit_count": {
+    "state": "KNOWN",
+    "value": 257,
+    "year": "FY2025-26",
+    "provenance": [
+     "M02"
+    ],
+    "evidence": "Press only",
+    "conflict_ids": []
+   }
+  },
+  "do_not": "Do not sum installed_capacity_tpd.compost_pits (20) with reported_throughput_tpd.compost_pits (558), or the MRF pair (252 vs 293), into one number. They are candidate readings of different or inconsistently defined metrics."
+ },
+ "proposed_capacity_projects": {
+  "_note": "Individual named projects only. Do NOT sum these and compare to TOTAL_PROPOSED_ADDITIONAL_CAPACITY -- the list is known to be incomplete (see C28).",
+  "projects": [
+   {
+    "id": "TEHKHAND_EXPANSION",
+    "action": "EXPAND",
+    "adds_tpd": {
+     "state": "KNOWN",
+     "value": 1000,
+     "year": "FY2025-26",
+     "provenance": [
+      "S15"
+     ],
+     "evidence": "USER-VERIFIED-OFFICIAL-PDF (assistant could not open the PDF itself)",
+     "conflict_ids": []
+    }
+   },
+   {
+    "id": "OKHLA_BIO_CNG",
+    "action": "BUILD (stated to replace the closed 200 TPD compost plant)",
+    "capacity_tpd": {
+     "state": "KNOWN",
+     "value": 300,
+     "year": "FY2025-26",
+     "provenance": [
+      "S16"
+     ],
+     "evidence": "USER-VERIFIED-OFFICIAL-PDF (assistant could not open the PDF itself)",
+     "conflict_ids": []
+    }
+   },
+   {
+    "id": "GHAZIPUR_CBG",
+    "action": "BUILD",
+    "capacity_tpd": {
+     "state": "KNOWN",
+     "value": 350,
+     "year": "FY2025-26",
+     "provenance": [
+      "S17"
+     ],
+     "evidence": "USER-VERIFIED-OFFICIAL-PDF (assistant could not open the PDF itself)",
+     "conflict_ids": []
+    }
+   }
+  ],
+  "TOTAL_PROPOSED_ADDITIONAL_CAPACITY": {
+   "state": "KNOWN",
+   "value": 7750,
+   "year": "FY2025-26",
+   "provenance": [
+    "S18",
+    "M01"
+   ],
+   "evidence": "Reported as a single city-wide total in the survey / press. NOT reconstructed by LocalLoop from the three named projects above (1000+300+350=1650, far short of 7750) because the underlying project list is incomplete.",
+   "conflict_ids": [
+    "C28"
+   ]
+  },
+  "reconciliation_status": "UNRECONCILED: named projects sum to 1650 of the reported 7750 total; ~6100 TPD of proposed capacity is unattributed to any named project in sources seen so far."
+ },
+ "remaining_unavailable": [
+  "source-node centroids/zones (MCD, NDMC, DCB)",
+  "facility operating status (all 4 subset facilities + Okhla compost)",
+  "facility current load / throughput (all facilities)",
+  "facility processing cost",
+  "facility coordinates",
+  "inter-node distance matrix",
+  "transport cost per tonne-km",
+  "output demand (compost, power, recyclables, CBG offtake)",
+  "zone/ward-level generation",
+  "MCD generation figure S21=12500 vs S01=11500 (C22) -- not resolved, S01 used provisionally"
+ ],
+ "flows": {
+  "state": "UNKNOWN",
+  "value": null,
+  "year": null,
+  "provenance": [],
+  "evidence": "",
+  "conflict_ids": []
+ },
+ "distances_km": {
+  "state": "UNKNOWN",
+  "value": null,
+  "year": null,
+  "provenance": [],
+  "evidence": "",
+  "conflict_ids": []
+ },
+ "transport_rs_per_tkm": {
+  "state": "UNKNOWN",
+  "value": null,
+  "year": null,
+  "provenance": [],
+  "evidence": "",
+  "conflict_ids": []
+ }
+}

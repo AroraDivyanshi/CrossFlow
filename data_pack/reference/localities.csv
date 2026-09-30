@@ -1,0 +1,4 @@
+locality_id,name,generation_tpd,composition,provenance_ids,note
+L00,NCT of Delhi (city total),see city_baseline.csv,wet 40% (P25),P25,city-level only
+L01,NDMC area,280,UNAVAILABLE,P27,"year unknown; reportedly self-sufficient, weak demo case"
+L02,MCD zone-wise (12 zones),UNAVAILABLE,UNAVAILABLE,,not found in any source seen; blocker for locality demo

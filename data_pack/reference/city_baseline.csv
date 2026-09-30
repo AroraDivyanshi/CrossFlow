@@ -1,0 +1,6 @@
+period,generation_tpd,capacity_tpd,processed_tpd,dumped_tpd,source_ids,note
+FY2021-22,11108,UNAVAILABLE,UNAVAILABLE,5828 (+450 rejects),P07;P08,DPCC AR
+FY2024-25 (CPCB quoting DPCC),11852,8173,7611,4241,P01-P04,primary excerpt
+FY2024-25 (IMPRI quoting DPCC),UNAVAILABLE,7750,UNAVAILABLE,UNAVAILABLE,P17,conflicts with row above
+"~2026 (Pioneer, survey unnamed)",UNAVAILABLE,7641,7460.3,UNAVAILABLE,P19,identify survey
+FY2023-24,UNAVAILABLE,UNAVAILABLE,UNAVAILABLE,UNAVAILABLE,,DPCC AR not opened

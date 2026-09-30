@@ -1,0 +1,12 @@
+id,parameter,status,proxy_source_to_look_for,production_replacement
+A01,Transport cost per tonne-km,"OPEN, no value assigned","MCD/DMSWSL transport contract rates, CPCB guidance",MCD contractor tariffs
+A02,Road circuity factor (haversine to road),"OPEN, no value assigned","OSRM on OSM (compute, then label DERIVED)",Live routing
+A03,Processing cost per tonne by technology,"OPEN, no value assigned","DMSWSL/MCD tipping fees, CPCB/MoHUA guidelines",Concession agreements
+A04,CAPEX per TPD by technology,OPEN; only aggregate proxy P31,MoHUA/SBM-U project DPRs,City DPRs
+A05,Compost yield and selling price,"OPEN, no value assigned",FCO/ FCO-notified market development assistance rates (DoF) ,Offtake contracts
+A06,Biogas and power yield per tonne,OPEN; MW per TPD partly derivable from P10/P11,MNRE / plant reports,Plant SCADA
+A07,"Output demand (compost, power, recyclables)","OPEN, no value assigned","Delhi parks/horticulture, DISCOM offtake, MRF buyers",Offtake MoUs
+A08,"Emission factors (transport, avoided landfill methane)","OPEN, no value assigned",IPCC 2006 / India GHG Platform / CPCB,Local LCA
+A09,Facility coordinates,"OPEN; to be geocoded from OSM (DERIVED, human-verified)",OpenStreetMap / Nominatim,GIS survey
+A10,Current load and spare capacity per facility,OPEN; derive only if per-plant processed tonnage found,DPCC AR plant tables,Weighbridge data
+A11,Zone/ward-level generation,"OPEN, no value assigned","MCD zone data, Parliament/Assembly answers",Ward SWM data

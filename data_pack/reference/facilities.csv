@@ -1,0 +1,6 @@
+facility_id,name,type,capacity_state,capacity_candidates_tpd,status,current_load,spare_capacity,lat,lon,provenance_ids
+OKHLA_WTE,Timarpur-Okhla WTE,waste_to_energy,KNOWN 1950 (nameplate),"1950 (P10, P33, P34, U2); 1550 (P24, likely typo, C16)",operating (P34),UNKNOWN,UNKNOWN,UNKNOWN,P10;P33;P34;U2
+GHAZIPUR_WTE,Ghazipur WTE,waste_to_energy,KNOWN 1300 (nameplate/authorised),"1300 (P12, P33, P34, P36, U2)",UNRESOLVED (C18),UNKNOWN,UNKNOWN,UNKNOWN,P12;P33;P34;P36;U2
+TEHKHAND_WTE,Tehkhand WTE,waste_to_energy,KNOWN 2000 (nameplate),"2000 (P24, P34, U2)",UNRESOLVED (under construction in P34; listed operating in P24),UNKNOWN,UNKNOWN,UNKNOWN,P24;P34;U2
+NARELA_BAWANA_WTE,Narela-Bawana WTE (DMSWSL),waste_to_energy,UNRESOLVED,1300; 2000; 2300 (U2); 2500 (C15),"operating (P33, P34)",UNKNOWN,UNKNOWN,UNKNOWN,P11;P33;P34;U2
+OKHLA_COMPOST,Okhla compost plant,compost,KNOWN 200,"200 (P15, P33)",UNRESOLVED,UNKNOWN,UNKNOWN,UNKNOWN,P15;P33

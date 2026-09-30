@@ -1,0 +1,106 @@
+{
+  "_purpose": "DEMO-mode-only assumptions for variables not found in any official source. Every value here is tagged state=ASSUMPTION with mandatory evidence text. VALIDATED mode must never read this file. Nothing here overwrites or is merged silently into network_2025_26.json -- the loader keeps them in separate namespaces and the API/frontend must label every value that traces back to this file as ASSUMED.",
+  "scenario_id": "DELHI_2025_26_DEMO_SCENARIO",
+
+  "facility_status": {
+    "_evidence": "No dated public source states current (2025-26) operating status for any of the 4 subset facilities. Assumed 'operating' for all four so the demo can allocate waste at all; this is the least eventful assumption (as opposed to guessing an outage). A scenario can flip any one to 'outage' to demonstrate the failure simulator.",
+    "OKHLA_WTE": {"state": "ASSUMPTION", "value": "operating", "evidence": "No 2025-26 status source found; assumed operating (see facility_status._evidence)."},
+    "NARELA_BAWANA_INTEGRATED": {"state": "ASSUMPTION", "value": "operating", "evidence": "No 2025-26 status source found; assumed operating."},
+    "GHAZIPUR_WTE": {"state": "ASSUMPTION", "value": "operating", "evidence": "Historical reference notes a 2021 shutdown for revamp with no confirmed resumption date; assumed operating for FY2025-26 for demo purposes only -- flagged as the least certain of the four status assumptions."},
+    "TEHKHAND_WTE": {"state": "ASSUMPTION", "value": "operating", "evidence": "No 2025-26 status source found; assumed operating."}
+  },
+
+  "facility_load_tpd": {
+    "_evidence": "No per-facility current-load figures were found in any 2025-26 source. Assumed load = 85% of each facility's KNOWN capacity, a generic utilisation-rate placeholder, NOT a reported figure. Production replacement: MCD/DMSWSL weighbridge records per facility.",
+    "utilisation_rate_assumed": 0.85,
+    "OKHLA_WTE": {"state": "ASSUMPTION", "value": 1317.5, "evidence": "0.85 x KNOWN capacity 1550 TPD (S08). Generic placeholder utilisation rate, not a reported load figure."},
+    "NARELA_BAWANA_INTEGRATED": {"state": "ASSUMPTION", "value": 2040.0, "evidence": "0.85 x KNOWN capacity 2400 TPD (S09). Generic placeholder utilisation rate, not a reported load figure."},
+    "GHAZIPUR_WTE": {"state": "ASSUMPTION", "value": 1105.0, "evidence": "0.85 x KNOWN capacity 1300 TPD (S10). Generic placeholder utilisation rate, not a reported load figure."},
+    "TEHKHAND_WTE": {"state": "ASSUMPTION", "value": 1700.0, "evidence": "0.85 x KNOWN capacity 2000 TPD (S11). Generic placeholder utilisation rate, not a reported load figure."}
+  },
+
+  "facility_processing_cost_rs_per_tonne": {
+    "_evidence": "No official per-tonne processing/tipping cost was found for any facility. Assumed a single flat rate for all four facilities based on commonly cited WTE tipping-fee ranges in Indian secondary literature, NOT facility-specific and NOT from MCD/DPCC. Production replacement: DMSWSL/MCD concession-agreement tipping fees per facility.",
+    "assumed_flat_rate_rs_per_tonne": 1500,
+    "OKHLA_WTE": {"state": "ASSUMPTION", "value": 1500, "evidence": "Flat assumed WTE tipping-fee placeholder; see facility_processing_cost_rs_per_tonne._evidence."},
+    "NARELA_BAWANA_INTEGRATED": {"state": "ASSUMPTION", "value": 1500, "evidence": "Flat assumed WTE tipping-fee placeholder; same as above."},
+    "GHAZIPUR_WTE": {"state": "ASSUMPTION", "value": 1500, "evidence": "Flat assumed WTE tipping-fee placeholder; same as above."},
+    "TEHKHAND_WTE": {"state": "ASSUMPTION", "value": 1500, "evidence": "Flat assumed WTE tipping-fee placeholder; same as above."}
+  },
+
+  "coordinates": {
+    "_evidence": "Approximate coordinates geocoded from the facility/area name via public map knowledge, NOT from an official facility register. Precision is locality-level only, sufficient for a demo map pin, not for routing or land-parcel work. Production replacement: MCD/DPCC facility GIS register.",
+    "OKHLA_WTE": {"state": "ASSUMPTION", "lat": 28.5355, "lon": 77.2910, "evidence": "Approximate Okhla, Delhi locality coordinate, geocoded by name -- not an official facility register entry."},
+    "NARELA_BAWANA_INTEGRATED": {"state": "ASSUMPTION", "lat": 28.8386, "lon": 77.0410, "evidence": "Approximate Bawana, Delhi locality coordinate, geocoded by name -- not an official facility register entry."},
+    "GHAZIPUR_WTE": {"state": "ASSUMPTION", "lat": 28.6258, "lon": 77.3273, "evidence": "Approximate Ghazipur, Delhi locality coordinate, geocoded by name -- not an official facility register entry."},
+    "TEHKHAND_WTE": {"state": "ASSUMPTION", "lat": 28.5145, "lon": 77.2823, "evidence": "Approximate Tehkhand, Delhi locality coordinate, geocoded by name -- not an official facility register entry."},
+    "OKHLA_BIO_CNG": {"state": "ASSUMPTION", "lat": 28.5355, "lon": 77.2910, "evidence": "Assumed co-located with OKHLA_WTE per the survey description (Bio-CNG replaces the closed compost plant at the same Okhla site) -- not an independently confirmed coordinate."},
+    "GHAZIPUR_CBG": {"state": "ASSUMPTION", "lat": 28.6258, "lon": 77.3273, "evidence": "Assumed co-located with GHAZIPUR_WTE per the survey description -- not an independently confirmed coordinate."},
+    "MCD": {"state": "ASSUMPTION", "lat": 28.6519, "lon": 77.2315, "evidence": "Placeholder centroid (central Delhi) standing in for the MCD source node; MCD covers most of the NCT and has no single real centroid. For a real run this must be replaced by a zone/ward-level network."},
+    "NDMC": {"state": "ASSUMPTION", "lat": 28.6139, "lon": 77.2090, "evidence": "Approximate NDMC area (Lutyens' Delhi) centroid, geocoded by name."},
+    "DCB": {"state": "ASSUMPTION", "lat": 28.5822, "lon": 77.1500, "evidence": "Approximate Delhi Cantonment area centroid, geocoded by name."}
+  },
+
+  "distance_km": {
+    "_evidence": "Straight-line (haversine) distance between the assumed coordinates above, multiplied by a road-circuity factor of 1.35 (a commonly used generic proxy for urban road networks, not measured for Delhi specifically). Production replacement: OSRM/OpenRouteService road-network distances.",
+    "circuity_factor_assumed": 1.35,
+    "method": "haversine(node_coord, facility_coord) * circuity_factor_assumed -- computed at load time by build_instance.py, not hardcoded here"
+  },
+
+  "transport_cost_rs_per_tonne_km": {
+    "state": "ASSUMPTION",
+    "value": 3.5,
+    "evidence": "Generic municipal solid-waste haulage cost proxy cited in Indian secondary literature on urban SWM transport; not an MCD contract rate. Production replacement: MCD/DMSWSL transport contractor rates."
+  },
+
+  "landfill_cost_rs_per_tonne": {
+    "state": "ASSUMPTION",
+    "value": 800,
+    "evidence": "Generic assumed cost of landfilling (transport to dumpsite + dumping), not an MCD-reported tipping fee. Set deliberately lower than WTE tipping fee so the LP does not artificially avoid landfill only because of a punitive cost; the environmental weight (below) is what should discourage landfill use in the objective."
+  },
+
+  "landfill_env_cost_rs_per_tonne": {
+    "state": "ASSUMPTION",
+    "value": 2500,
+    "evidence": "Illustrative environmental-cost placeholder for landfilling (methane emissions, land degradation), scaled to be materially larger than the assumed processing environmental cost of zero. Not derived from an emissions factor. Production replacement: IPCC/CPCB emission factors converted to a shadow price, or removed in favour of reporting emissions in physical units instead of Rs.",
+    "note": "Facility env_cost is left at KNOWN 0 (no assumption) rather than assumed non-zero, since a fabricated per-technology emissions figure would be worse than omitting it; the demo's environmental storyline instead comes from landfill diversion tonnage, not a cost figure."
+  },
+
+  "output_demand": {
+    "_evidence": "No demand-side data (compost buyers, DISCOM offtake beyond the known WTE-to-grid arrangement, recyclable buyers) was found for FY2025-26. Output-matching is therefore NOT included in this demo scenario's optimizer run -- it is out of scope until real demand nodes are sourced, not filled with an assumed number.",
+    "status": "NOT_MODELLED_IN_THIS_SCENARIO"
+  },
+
+  "budget_annual_rs": {
+    "state": "ASSUMPTION",
+    "value": 200000000,
+    "evidence": "Illustrative Rs 20 crore/year infrastructure budget cap for the demo's BUILD/RETROFIT decision, chosen only to make the budget constraint non-trivial (bigger than one small retrofit, smaller than multiple builds). Not an actual MCD capital budget figure. This is an ANNUAL budget, compared against the ANNUALISED capex figures below (see capex_annualization_note).",
+    "capex_annualization_note": "P31 (provenance.csv) is a TOTAL project-CAPEX proxy of ~Rs 7.09 lakh (708,667) per TPD -- a one-time construction cost, not an annual figure. To compare it against this annual budget and against annual processing/transport/landfill costs, each candidate project's capex_annual_rs below is computed as: total_capex_rs (= 708,667 x adds_tpd) / annualization_period_years (= 20, an illustrative straight-line prototype assumption, NOT a financed/NPV amortisation and NOT itself sourced from P31 or any Delhi document -- typical WTE/infrastructure asset lives are often cited in the 20-25 year range in general engineering literature, but 20 was chosen here only to produce an illustrative annual figure, not because it is Delhi- or technology-specific).",
+    "candidate_projects_cost": {
+      "TEHKHAND_EXPANSION": {
+        "state": "ASSUMPTION",
+        "total_capex_rs": {"state": "ASSUMPTION", "value": 708667000, "evidence": "708,667 Rs/TPD (P31 proxy) x 1,000 TPD (KNOWN, S15)"},
+        "annualization_period_years": {"state": "ASSUMPTION", "value": 20, "evidence": "Illustrative straight-line prototype period; not sourced, see capex_annualization_note"},
+        "capex_annual_rs": 35433350.0,
+        "adds_tpd": {"state": "KNOWN", "value": 1000, "provenance": ["S15"]},
+        "evidence": "capex_annual_rs = total_capex_rs / annualization_period_years = 708,667,000 / 20. The P31 rate itself is an average over unspecified technologies from a different (Mayor-announced 4-plant) project, not a Tehkhand-specific figure -- see provenance.csv row P31."
+      },
+      "OKHLA_BIO_CNG": {
+        "state": "ASSUMPTION",
+        "total_capex_rs": {"state": "ASSUMPTION", "value": 212600100, "evidence": "708,667 Rs/TPD (P31 proxy) x 300 TPD (KNOWN, S16)"},
+        "annualization_period_years": {"state": "ASSUMPTION", "value": 20, "evidence": "Illustrative straight-line prototype period; not sourced, see capex_annualization_note"},
+        "capex_annual_rs": 10630005.0,
+        "adds_tpd": {"state": "KNOWN", "value": 300, "provenance": ["S16"]},
+        "evidence": "capex_annual_rs = total_capex_rs / annualization_period_years = 212,600,100 / 20. Technology (Bio-CNG) differs from the P31 proxy's WTE basis, so treat as a rough order-of-magnitude placeholder only."
+      },
+      "GHAZIPUR_CBG": {
+        "state": "ASSUMPTION",
+        "total_capex_rs": {"state": "ASSUMPTION", "value": 248033450, "evidence": "708,667 Rs/TPD (P31 proxy) x 350 TPD (KNOWN, S17)"},
+        "annualization_period_years": {"state": "ASSUMPTION", "value": 20, "evidence": "Illustrative straight-line prototype period; not sourced, see capex_annualization_note"},
+        "capex_annual_rs": 12401672.5,
+        "adds_tpd": {"state": "KNOWN", "value": 350, "provenance": ["S17"]},
+        "evidence": "capex_annual_rs = total_capex_rs / annualization_period_years = 248,033,450 / 20. Technology (CBG) differs from the P31 proxy's WTE basis, same caveat as above."
+      }
+    }
+  }
+}

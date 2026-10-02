@@ -1,77 +1,414 @@
-# CrossFlow
+# ♻️ CrossFlow
 
-**Operating Intelligence for Distributed Resource Recovery** — a decision-intelligence
-backend for decentralized municipal solid waste processing networks, built against
-an FY2025-26 Delhi baseline.
+### Operating Intelligence for Distributed Resource Recovery
 
-CrossFlow answers one question per locality/network: **BUILD, RETROFIT, REROUTE, or DO
-NOTHING?** — by optimizing waste allocation across existing and candidate processing
-facilities, not by assuming any one technology is automatically the right answer.
+**CrossFlow** is a decision-intelligence platform for designing and adapting municipal solid-waste processing networks.
 
-This repository currently contains the **backend only** (frontend work has not started).
-The backend is implemented as a set of Python modules (`localloop/backend/engine/`) — the
-`localloop` path is an internal/historical module name and is not renamed as part of the
-CrossFlow project naming, per project convention of not renaming internal identifiers.
+Instead of asking:
 
-## Status: Backend frozen for frontend development
+> **“Which waste-processing technology should we use?”**
 
-The backend has passed a full correction and freeze-check pass. See
-`localloop/backend/FREEZE_REPORT.md` for the complete test results, scenario outputs, and
-the JSON contract the frontend should consume.
+CrossFlow asks:
 
-## Repository layout
+> **“Given the waste, existing infrastructure, available capacity, changing conditions, and useful outputs — what should the network do?”**
 
+It evaluates four network actions:
+
+**BUILD · RETROFIT · REROUTE · DO NOTHING**
+
+The current prototype is built around an **FY2025–26 Delhi baseline**.
+
+---
+
+## 💡 The Idea
+
+Waste-processing decisions are rarely about choosing one technology.
+
+Waste composition changes. Facilities have different capacities. Existing infrastructure may already have usable spare capacity. Weather, festivals, and outages can change the network. And processing waste is only part of the problem — the resulting outputs also need somewhere useful to go.
+
+CrossFlow therefore treats waste processing as a **network optimization problem**:
+
+```text
+Waste Profile
+     ↓
+Technology Compatibility
+     ↓
+Existing Infrastructure + Capacity
+     ↓
+Scenario Conditions
+     ↓
+Network Optimization
+     ↓
+Why this decision?
+     ↓
+Recovered Outputs
+     ↓
+Where can those outputs be useful?
 ```
+
+> **Optimize the network, not just the technology.**
+
+---
+
+# 🧠 Core Features
+
+### 🧪 Waste Recipe Engine
+
+Evaluates whether a waste stream is compatible with different processing pathways using factors such as:
+
+- organic fraction
+- moisture
+- contamination
+- C:N ratio
+
+Returns compatibility, category, risk, confidence, and limiting factors.
+
+The Recipe Engine is an **advisory compatibility layer** — it does not silently override network optimization.
+
+---
+
+### ♻️ Hybrid Processing Optimizer
+
+Optimizes allocations across existing and candidate facilities rather than assuming a single processing technology.
+
+Possible actions:
+
+**BUILD · RETROFIT · REROUTE · DO NOTHING**
+
+Supports:
+
+- **TOTAL_NETWORK** capacity
+- **INCREMENTAL_SPARE** capacity
+
+using a MILP-based optimization model.
+
+---
+
+### 🎯 Output-First Matching
+
+CrossFlow goes beyond:
+
+> “Where can the waste go?”
+
+and considers:
+
+> **“Where can the recovered output actually be useful?”**
+
+The output-matching layer connects:
+
+**Processing → Recovered Output → Demand → Match**
+
+Current modelling includes outputs such as recovered power and compost.
+
+---
+
+### 🌧️ Scenario & Failure Simulation
+
+The network can be evaluated under different conditions, including:
+
+- Baseline
+- Ghazipur outage
+- Monsoon surge
+- Festival surge
+- Spare-capacity scenario
+
+This shows how network allocations change when conditions change.
+
+---
+
+### 🧠 Explainable Why Engine
+
+Every major optimization decision is accompanied by structured reasoning derived from the actual pipeline.
+
+Instead of only showing *what* CrossFlow decided, the system also explains *why*.
+
+---
+
+### 💰 Economics & Impact
+
+CrossFlow evaluates annualized economic and lifecycle implications using the available model inputs.
+
+Results retain their provenance:
+
+**OBSERVED · DERIVED · ASSUMED · MODELLED**
+
+so prototype assumptions are not presented as official observed values.
+
+---
+
+### 🏗️ Existing Infrastructure & Spare Capacity
+
+CrossFlow considers infrastructure that already exists before assuming that new infrastructure should be built.
+
+Conceptually:
+
+```text
+Nameplate Capacity
+        ↓
+Current Load
+        ↓
+Spare Capacity
+        ↓
+CrossFlow Allocation
+        ↓
+Remaining Capacity
+```
+
+---
+
+# 🏗️ Architecture
+
+```text
+┌──────────────────────┐
+│   Frontend           │
+│   HTML / CSS / JS    │
+└──────────┬───────────┘
+           │
+           ▼
+┌──────────────────────┐
+│   Python API         │
+│   api/server.py      │
+└──────────┬───────────┘
+           │
+           ▼
+┌────────────────────────────┐
+│     CrossFlow Pipeline     │
+│                            │
+│ Optimizer                 │
+│ Recipe Engine             │
+│ Why Engine                │
+│ Output Matching           │
+│ Economics                 │
+│ Scenarios                 │
+└──────────┬─────────────────┘
+           │
+           ▼
+┌──────────────────────┐
+│      Data Pack       │
+│ Provenance + Baseline│
+│ + Explicit Assumptions│
+└──────────────────────┘
+```
+
+The frontend communicates with the backend through:
+
+```text
+GET /api/health
+GET /api/scenarios
+GET /api/network
+GET /api/pipeline/<scenario>
+GET /api/recipe
+```
+
+---
+
+# 🛠️ Tech Stack
+
+**Frontend**
+- HTML
+- CSS
+- Vanilla JavaScript
+- Leaflet
+
+**Backend**
+- Python
+- MILP optimization
+- Linear programming
+- Rule-based feedstock compatibility
+- Lightweight HTTP API
+
+**Data**
+- JSON
+- CSV
+- Provenance-aware modelling
+
+---
+
+# 📁 Project Structure
+
+```text
 CrossFlow/
-├── data_pack/                        # Source data, provenance, and assumptions
-│   ├── provenance.csv                # Every sourced value: source, dataset, year, variable
-│   ├── conflicts.csv                 # Documented conflicts between sources, left unresolved
-│   ├── recipe_thresholds.json        # Auditable thresholds for the waste recipe engine
-│   ├── primary_2025_26/              # The FROZEN FY2025-26 baseline used by the backend
-│   │   ├── network_2025_26.json      # KNOWN/DERIVED/PENDING/UNKNOWN network snapshot
-│   │   ├── demo_assumptions.json     # DEMO-mode-only assumptions (facility status/load/cost/coords)
-│   │   ├── output_assumptions.json   # Output yields, demand nodes (power, compost)
-│   │   ├── economics_assumptions.json # Tariffs, prices, emission factors
-│   │   └── VALIDATION_REPORT.md      # Arithmetic/consistency checks on the baseline
-│   └── reference/                    # Superseded historical datasets, kept for reference only
+├── frontend/
+│   ├── index.html
+│   └── js/
+│       ├── app.js
+│       └── api-client.js
 │
-└── localloop/backend/                # The backend implementation (internal module name)
-    ├── engine/
-    │   ├── model.py          # Field/State (KNOWN/DERIVED/ASSUMPTION/PENDING/UNRESOLVED/UNKNOWN)
-    │   ├── build_instance.py # network_2025_26.json (+ demo_assumptions.json) -> Instance
-    │   ├── costing.py        # Shared unweighted per-tonne cost helpers
-    │   ├── optimizer.py      # MILP: TOTAL_NETWORK / INCREMENTAL_SPARE, BUILD/RETROFIT
-    │   ├── scenarios.py      # baseline, ghazipur_outage, festival/monsoon surge, spare-capacity demo
-    │   ├── explain.py        # Structured Why engine — every claim computed, not asserted
-    │   ├── outputs.py        # Output-first matching (power, compost) via LP
-    │   ├── recipe.py         # Rule-based feedstock compatibility (advisory only)
-    │   ├── economics.py      # Annual costs/revenue/emissions, OBSERVED/DERIVED/ASSUMED/MODELLED
-    │   ├── pipeline.py       # Integrates all stages into one run — the de facto API contract
-    │   └── loader.py         # CLI: lists every field blocking a VALIDATED-mode run
-    ├── tests/                 # 57 tests, all passing (no pytest dependency — see tests/)
-    ├── run_demo.py            # Runnable entry point for all scenarios
-    └── FREEZE_REPORT.md       # Full freeze-check report: tests, scenarios, JSON contract
-
+├── data_pack/
+│   ├── provenance.csv
+│   ├── conflicts.csv
+│   ├── recipe_thresholds.json
+│   └── primary_2025_26/
+│
+└── localloop/
+    └── backend/
+        ├── api/
+        │   └── server.py
+        ├── engine/
+        │   ├── optimizer.py
+        │   ├── scenarios.py
+        │   ├── explain.py
+        │   ├── outputs.py
+        │   ├── recipe.py
+        │   ├── economics.py
+        │   ├── pipeline.py
+        │   └── ...
+        ├── tests/
+        ├── run_demo.py
+        └── FREEZE_REPORT.md
 ```
 
-## Two data modes
+`localloop` is retained as an internal/historical Python module path.
 
-- **VALIDATED** — accepts only officially sourced (KNOWN/DERIVED) values. Currently
-  **not runnable end-to-end**: FY2025-26 public sources do not include per-facility
-  load, cost, coordinates, or transport rates. This is the honest state of public
-  data, not a bug — run `python3 -m engine.loader` to see exactly what's missing.
-- **DEMO** — layers in explicitly labelled prototype ASSUMPTIONS (with evidence) for
-  the fields above, so the full pipeline can run and be demonstrated end-to-end.
-  Every assumed value is traceable back to its evidence string.
+---
 
-## Running it
+# 📊 Data Philosophy
+
+CrossFlow is deliberately **provenance-aware**.
+
+The system distinguishes between:
+
+| Label | Meaning |
+|---|---|
+| **KNOWN / OBSERVED** | Directly sourced information |
+| **DERIVED** | Calculated from sourced values |
+| **ASSUMPTION** | Explicit prototype input |
+| **MODELLED** | Generated by the decision/economic models |
+| **PENDING / UNKNOWN** | Not reliably available |
+
+This matters because some facility-level information required for a complete real-world optimization is not publicly available at sufficient granularity.
+
+### Two Modes
+
+**VALIDATED**
+
+Uses supported sourced/derived values and refuses to silently fill missing information.
+
+**DEMO**
+
+Adds explicitly labelled assumptions where necessary so the complete pipeline can be demonstrated end-to-end.
+
+> **No fabricated values are presented as observed facts.**
+
+---
+
+# ▶️ Running CrossFlow
+
+## Start the backend
+
+From the repository root:
 
 ```bash
 cd localloop/backend
-python3 -m tests.test_optimizer     # 24 tests
-python3 -m tests.test_engines       # 33 tests
-python3 run_demo.py baseline        # or: ghazipur_outage, festival_surge_mcd_20pct,
-                                     #     monsoon_surge_30pct, spare_capacity_demo
+python -m api.server
 ```
 
-See `FREEZE_REPORT.md` for the full JSON shape returned by `engine.pipeline.run_pipeline()`.
+The API runs at:
+
+```text
+http://localhost:8000
+```
+
+Check:
+
+```text
+http://localhost:8000/api/health
+```
+
+## Start the frontend
+
+In another terminal:
+
+```bash
+cd frontend
+python -m http.server 5500
+```
+
+Then open:
+
+```text
+http://localhost:5500
+```
+
+---
+
+# 🧪 Backend Tests
+
+From:
+
+```bash
+cd localloop/backend
+```
+
+Run:
+
+```bash
+python -m tests.test_optimizer
+python -m tests.test_engines
+```
+
+The backend currently contains **57 tests**.
+
+The demo pipeline can also be run directly:
+
+```bash
+python run_demo.py baseline
+```
+
+Available scenarios include:
+
+```text
+baseline
+ghazipur_outage
+festival_surge_mcd_20pct
+monsoon_surge_30pct
+spare_capacity_demo
+```
+
+For the detailed backend contract and freeze results:
+
+```text
+localloop/backend/FREEZE_REPORT.md
+```
+
+---
+
+# 🇮🇳 Current Scope
+
+CrossFlow is a **decision-support prototype**, not a production municipal control system.
+
+The current implementation is based on an FY2025–26 Delhi baseline and uses public data wherever possible. Where the public data is insufficient for a complete end-to-end demonstration, assumptions are explicitly labelled.
+
+This makes the prototype suitable for:
+
+- scenario exploration
+- network-level planning concepts
+- optimization demonstrations
+- explainable decision support
+- hackathon prototyping
+
+but not as an official municipal allocation system.
+
+---
+
+# 🚀 Future Directions
+
+Potential extensions include:
+
+- richer locality-level waste profiles
+- live municipal data
+- additional processing pathways
+- richer transport modelling
+- uncertainty-aware optimization
+- facility telemetry
+- multi-locality deployment
+- municipal planning APIs
+
+---
+
+## 🏆 Built for WasteChakra Round 2
+
+**CrossFlow**  
+*Operating Intelligence for Distributed Resource Recovery*
+
+**Optimize the network, not just the technology.**

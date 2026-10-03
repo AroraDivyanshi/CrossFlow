@@ -271,8 +271,8 @@ body{font-size:16px;letter-spacing:.001em}
       <div class="hero-flowline"><span class="flow-node"><b>🗑</b> collect</span><span class="flow-arrow">→</span><span class="flow-node"><b>↗</b> route</span><span class="flow-arrow">→</span><span class="flow-node"><b>⚙</b> process</span><span class="flow-arrow">→</span><span class="flow-node"><b>⚡</b> recover</span><span class="flow-arrow">→</span><span class="flow-node"><b>✦</b> decide</span></div>
     </div>
     <div class="hero-photo-v5">
-      <div class="photo-top"><span>Delhi Recovery Network</span><span class="play-pill"><i></i> Live concept · 05 scenarios</span></div>
-      <div class="photo-card"><div class="photo-card-head"><div><div class="eyebrow-light">Scenario signal</div><h3>One city. Many possible moves.</h3></div><div class="scenario-live"><i></i><span id="heroChartScenario">Baseline</span></div></div><p>See how diversion changes when the same network is pushed through different conditions.</p><div class="scenario-chart-wrap"><div class="scenario-chart" id="scenarioChart"><div class="chart-y"><span>100%</span><span>75</span><span>50</span><span>25</span><span>0</span></div><div class="scenario-bars"><div class="scenario-bar-col" data-scenario="baseline"><div class="scenario-bar-value">61%</div><div class="scenario-bar-fill" style="height:61%"></div><span>Base</span></div><div class="scenario-bar-col" data-scenario="ghazipur_outage"><div class="scenario-bar-value">50%</div><div class="scenario-bar-fill" style="height:50%"></div><span>Outage</span></div><div class="scenario-bar-col" data-scenario="festival_surge_mcd_20pct"><div class="scenario-bar-value">51%</div><div class="scenario-bar-fill" style="height:51%"></div><span>Festival</span></div><div class="scenario-bar-col" data-scenario="monsoon_surge_30pct"><div class="scenario-bar-value">47%</div><div class="scenario-bar-fill" style="height:47%"></div><span>Monsoon</span></div><div class="scenario-bar-col" data-scenario="spare_capacity_demo"><div class="scenario-bar-value">100%</div><div class="scenario-bar-fill" style="height:100%"></div><span>Spare</span></div></div></div><div class="pulse-stat"><span>Current diversion</span><b id="heroDiversion">61.1%</b><small id="heroDecision">DO NOTHING</small></div></div></div>
+      <div class="photo-top"><span>Delhi Recovery Network</span><span class="play-pill"><i></i> Live · 05 scenarios</span></div>
+      <div class="photo-card"><div class="photo-card-head"><div><div class="eyebrow-light">Scenario signal</div><h3>One city. Many possible moves.</h3></div><div class="scenario-live"><i></i><span id="heroChartScenario">Loading…</span></div></div><p>See how diversion changes when the same network is pushed through different conditions.</p><div class="scenario-chart-wrap"><div class="scenario-chart" id="scenarioChart"><div class="chart-y"><span>100%</span><span>75</span><span>50</span><span>25</span><span>0</span></div><div class="scenario-bars"><div class="scenario-bar-col" data-scenario="baseline"><div class="scenario-bar-value">—</div><div class="scenario-bar-fill" style="height:0%"></div><span>Base</span></div><div class="scenario-bar-col" data-scenario="ghazipur_outage"><div class="scenario-bar-value">—</div><div class="scenario-bar-fill" style="height:0%"></div><span>Outage</span></div><div class="scenario-bar-col" data-scenario="festival_surge_mcd_20pct"><div class="scenario-bar-value">—</div><div class="scenario-bar-fill" style="height:0%"></div><span>Festival</span></div><div class="scenario-bar-col" data-scenario="monsoon_surge_30pct"><div class="scenario-bar-value">—</div><div class="scenario-bar-fill" style="height:0%"></div><span>Monsoon</span></div><div class="scenario-bar-col" data-scenario="spare_capacity_demo"><div class="scenario-bar-value">—</div><div class="scenario-bar-fill" style="height:0%"></div><span>Spare</span></div></div></div><div class="pulse-stat"><span>Current diversion</span><b id="heroDiversion">—</b><small id="heroDecision">loading…</small></div></div></div>
     </div>
   </section>
 
@@ -284,23 +284,23 @@ body{font-size:16px;letter-spacing:.001em}
   </section>
 
   <section class="kpis">
-    <article class="glass kpi kpi-throughput" id="throughputCard"><div class="label">Network throughput</div><div class="metric-main"><div><div class="num" id="throughput">11,862</div><div class="note">TPD • main optimizer scope</div></div><span class="metric-state">NETWORK</span></div><div class="metric-rule"></div><svg class="sparkline" viewBox="0 0 190 60" preserveAspectRatio="none"><path d="M2 44 C25 39,31 20,52 28 S82 50,101 34 S137 14,158 23 S177 15,188 9"/></svg></article>
-    <article class="glass kpi kpi-landfill" id="landfillCard"><div class="label">Landfilled</div><div class="metric-main"><div><div class="num" id="landfill">4,612</div><div class="note">TPD • scenario output</div></div><span class="metric-state" id="landfillState">PRESSURE 38.9%</span></div><div class="metric-rule"></div><div class="value-band"><span>landfill pressure</span><b id="landfillPressure">38.9%</b></div><div class="pressure-track"><i id="pressureFill" style="width:38.9%"></i></div></article>
-    <article class="glass kpi kpi-diversion" id="diversionCard"><div class="label">Diversion</div><div class="metric-main"><div><div class="num" id="diversion">61.1%</div><div class="note">solver-derived allocation</div></div><span class="metric-state" id="diversionState">HEALTHY</span></div><div class="metric-rule"></div><div class="ring-wrap"><div class="ring" id="diversionRing"><span>61%</span></div></div><div class="diversion-caption"><span>recovered / processed</span><b>↗</b></div></article>
-    <article class="glass kpi kpi-power" id="powerCard"><div class="label">Power matched</div><div class="metric-main"><div><div class="num" id="power">1,812.5</div><div class="note">MWh/day • recovered output</div></div><span class="metric-state" id="powerState">MATCHED</span></div><div class="metric-rule"></div><div class="power-scale"><span>0</span><i id="powerFill" style="width:100%"></i><span>1,812.5</span></div><div class="value-foot"><span>recovered output</span><b>⚡</b></div></article>
+    <article class="glass kpi kpi-throughput" id="throughputCard"><div class="label">Network throughput</div><div class="metric-main"><div><div class="num" id="throughput">—</div><div class="note">TPD • main optimizer scope</div></div><span class="metric-state">NETWORK</span></div><div class="metric-rule"></div><div class="value-band"><span>processed <b id="throughputProcessed">—</b></span><span>landfilled <b id="throughputLandfilled" style="color:#c0651f">—</b></span></div><div class="stack" style="height:10px;margin-top:7px"><span class="div" id="tpProcessedBar" style="width:0%"></span><span class="land" id="tpLandfillBar" style="width:0%"></span></div></article>
+    <article class="glass kpi kpi-landfill" id="landfillCard"><div class="label">Landfilled</div><div class="metric-main"><div><div class="num" id="landfill">—</div><div class="note">TPD • scenario output</div></div><span class="metric-state" id="landfillState">LOADING</span></div><div class="metric-rule"></div><div class="value-band"><span>landfill pressure</span><b id="landfillPressure">—</b></div><div class="pressure-track"><i id="pressureFill" style="width:0%"></i></div></article>
+    <article class="glass kpi kpi-diversion" id="diversionCard"><div class="label">Diversion</div><div class="metric-main"><div><div class="num" id="diversion">—</div><div class="note">solver-derived allocation</div></div><span class="metric-state" id="diversionState">LOADING</span></div><div class="metric-rule"></div><div class="ring-wrap"><div class="ring" id="diversionRing" style="background:conic-gradient(var(--teal) 0 0%,#e6eee9 0% 100%)"><span>—</span></div></div><div class="diversion-caption"><span>processed / generated</span></div></article>
+    <article class="glass kpi kpi-power" id="powerCard"><div class="label">Power matched</div><div class="metric-main"><div><div class="num" id="power">—</div><div class="note">MWh/day • recovered output</div></div><span class="metric-state" id="powerState">LOADING</span></div><div class="metric-rule"></div><div class="power-scale"><span>0</span><i id="powerFill" style="--power-width:0%"></i><span>100%</span></div><div class="value-foot"><span>recovered output</span><b>⚡</b></div></article>
   </section>
 
   <section class="main">
     <article class="glass decision">
       <div class="eyeline"><span class="section-label">Next move</span><span class="scope" id="scopeTag">TOTAL_NETWORK</span></div>
-      <div class="move"><div class="move-icon float2" id="moveIcon">↺</div><div><h3 id="decisionTitle">Network stable</h3><p id="decisionText">Baseline allocation remains optimal across the current main network.</p></div></div>
+      <div class="move"><div class="move-icon float2" id="moveIcon">●</div><div><h3 id="decisionTitle">Loading…</h3><p id="decisionText">Fetching the live scenario from the CrossFlow API.</p></div></div>
       <div class="decision-options"><div class="decision-option" id="buildOption"><span>BUILD</span><b>new capacity</b></div><div class="decision-option" id="retrofitOption"><span>RETROFIT</span><b>upgrade existing</b></div><div class="decision-option" id="rerouteOption"><span>REROUTE</span><b>change allocation</b></div><div class="decision-option" id="nothingOption"><span>DO NOTHING</span><b>hold the network</b></div></div>
-      <div class="reason-line" id="reasonLine"><span class="reason">WHY · lowest modeled landed cost</span><span class="reason">CAPACITY · feasible</span><span class="reason">EVIDENCE · labelled</span><span class="reason">SCOPE · main network</span></div>
+      <div class="reason-line" id="reasonLine"><span class="reason">Loading scenario…</span></div>
       <div class="decision-foot"><span class="confidence"><i></i> Model computes. Evidence labels. Explanation interprets.</span><span>🧠 LLM-ready</span></div>
     </article>
 
     <article class="glass map" id="delhi-map">
-      <div class="map-head"><h3>Delhi network view</h3><span id="mapCaption">real coordinates &middot; assumed-state</span></div>
+      <div class="map-head"><h3>Delhi network view</h3><span id="mapCaption">Delhi &middot; approximate locations</span></div>
       <div id="leafletMap" role="img" aria-label="Map of CrossFlow source nodes and facilities across Delhi"></div>
       <div class="map-stats" id="mapStats"><span class="map-chip"><b>&hellip;</b> facilities</span><span class="map-chip"><b>&hellip;</b> TPD network</span><span class="map-chip">loading&hellip;</span></div>
     </article>
@@ -314,7 +314,7 @@ body{font-size:16px;letter-spacing:.001em}
         <h3>♻ Build a recipe for the feedstock.</h3>
         <p>CrossFlow checks the stream before the decision is explained — a compact compatibility signal, not a hidden optimizer rule.</p>
       </div>
-      <div class="score" id="scoreRing"><div class="score-inner"><strong id="score">87</strong><span>compatibility</span></div></div>
+      <div class="score" id="scoreRing" style="background:conic-gradient(var(--teal) 0 0%,#e0eae5 0% 100%)"><div class="score-inner"><strong id="score">—</strong><span>compatibility</span></div></div>
     </div>
     <div class="recipe-controls">
       <div class="feed-selector"><button class="feed active" data-feed="mixed">Mixed MSW</button><button class="feed" data-feed="wet">Wet organics</button><button class="feed" data-feed="dry">Dry recoverables</button><button class="feed" data-feed="highmoisture">Surge mix</button></div>
@@ -325,17 +325,17 @@ body{font-size:16px;letter-spacing:.001em}
         <div class="journey-label">Recipe pathway</div>
         <div class="journey-title">What happens to this stream?</div>
         <div class="journey-path">
-          <div class="j-node"><div class="j-icon">🗑</div><b>INPUT</b><span id="recipeInput">mixed MSW</span></div>
+          <div class="j-node"><div class="j-icon">🗑</div><b>INPUT</b><span id="recipeInput">—</span></div>
           <div class="j-arrow">→</div>
-          <div class="j-node"><div class="j-icon">⚙</div><b>PROCESS</b><span id="recipeRoute">thermal route</span></div>
+          <div class="j-node"><div class="j-icon">⚙</div><b>PROCESS</b><span id="recipeRoute">—</span></div>
           <div class="j-arrow">→</div>
-          <div class="j-node"><div class="j-icon">♻</div><b>OUTPUT</b><span id="recipeOutput">recoverable value</span></div>
+          <div class="j-node"><div class="j-icon">♻</div><b>OUTPUT</b><span id="recipeOutput">—</span></div>
         </div>
         <div class="recipe-insight"><div class="spark">!</div><div><b id="limitingTitle">Watch moisture</b><span id="limitingText">Moisture remains the first thing an operator should look at.</span></div></div>
       </div>
       <div class="recipe-factors">
         <div class="factor"><span class="factor-badge">FIT</span><div class="factor-head"><span>Moisture window</span><b id="f1v">84%</b></div><div class="mini-track"><div class="mini-fill" id="f1" style="width:84%"></div></div><small id="f1t">acceptable window</small></div>
-        <div class="factor"><span class="factor-badge">CATEGORY</span><div class="factor-head"><span>Compatibility band</span><b id="f2v">91%</b></div><div class="mini-track"><div class="mini-fill" id="f2" style="width:91%"></div></div><small id="f2t">strong modeled fit</small></div>
+        <div class="factor"><span class="factor-badge">CATEGORY</span><div class="factor-head"><span>Compatibility band</span><b id="f2v">91%</b></div><div class="mini-track"><div class="mini-fill" id="f2" style="width:91%"></div></div><small id="f2t">strong modelled fit</small></div>
         <div class="factor"><span class="factor-badge">RISK</span><div class="factor-head"><span>Contamination</span><b id="f3v">18%</b></div><div class="mini-track"><div class="mini-fill" id="f3" style="width:18%"></div></div><small id="f3t">low relative friction</small></div>
         <div class="factor"><span class="factor-badge">EVIDENCE</span><div class="factor-head"><span>Signal confidence</span><b id="f4v">76%</b></div><div class="mini-track"><div class="mini-fill" id="f4" style="width:76%"></div></div><small id="f4t">prototype signal</small></div>
       </div>
@@ -345,7 +345,7 @@ body{font-size:16px;letter-spacing:.001em}
     <div class="mini-label">Recipe takeaway</div>
     <div class="verdict"><div class="verdict-dot">✓</div><div><b id="recipeState">Strong fit</b><span>useful context for operators</span></div></div>
     <h4>What the layer is saying</h4>
-    <p id="recipeText">Mixed MSW shows a strong modeled compatibility with thermal processing, with moisture and composition remaining the key factors to monitor.</p>
+    <p id="recipeText">Mixed MSW shows a strong modelled compatibility with thermal processing, with moisture and composition remaining the key factors to monitor.</p>
     <div class="compat"><span class="good">✓ route compatible</span><span class="good">✓ output signal</span><span class="warn">△ moisture watch</span><span class="good">✓ evidence tagged</span></div>
     <div class="recipe-meter"><div class="meter-line"><span>Compatibility signal</span><b id="recipeMeterValue">87%</b></div><div class="meter"><i id="recipeMeter" style="width:87%"></i></div></div>
     <div class="recipe-note"><b>Design principle:</b> the recipe engine explains feedstock fit; it never silently changes the solver decision.</div>
@@ -353,9 +353,9 @@ body{font-size:16px;letter-spacing:.001em}
 </section>
 
   <section class="analytics" id="impact">
-    <article class="glass panel"><div class="panel-head"><h3>Landfill pressure</h3><span>scenario mix</span></div><div class="chart-label"><span>Diverted</span><b id="divertedBar">61.1%</b></div><div class="stack"><span class="div" id="divertedFill" style="width:61.1%"></span><span class="land" id="landfillFill" style="width:38.9%"></span></div><div class="legend-row"><span><i style="background:var(--teal)"></i>recovered / processed</span><span><i style="background:var(--orange)"></i>landfilled</span></div></article>
-    <article class="glass panel"><div class="panel-head"><h3>Network pulse</h3><span>illustrative trend</span></div><svg class="line-chart" viewBox="0 0 420 94" preserveAspectRatio="none"><path class="area" d="M5 76 C38 66,57 70,83 53 S130 57,157 43 S204 50,229 29 S271 39,304 28 S348 34,373 17 S401 17,415 8 L415 94 L5 94 Z"/><path d="M5 76 C38 66,57 70,83 53 S130 57,157 43 S204 50,229 29 S271 39,304 28 S348 34,373 17 S401 17,415 8"/></svg><div class="chart-label"><span>network load</span><b>scenario-sensitive</b></div></article>
-    <article class="glass panel"><div class="panel-head"><h3>Lifecycle impact</h3><span>annual</span></div><div class="impact-num" id="emissions">1.32M</div><div class="impact-unit">tCO₂e/year avoided</div><div class="impact-diagram"><div class="bubble">🗑</div><div class="bubble-arrow">→</div><div class="bubble">♻</div><div class="bubble-arrow">→</div><div class="bubble">🌱</div></div><div class="impact-note" id="impactNote">Counterfactual: compare modeled recovery with an all-landfilled baseline.</div></article>
+    <article class="glass panel"><div class="panel-head"><h3>Landfill pressure</h3><span>scenario mix</span></div><div class="chart-label"><span>Diverted</span><b id="divertedBar">—</b></div><div class="stack"><span class="div" id="divertedFill" style="width:0%"></span><span class="land" id="landfillFill" style="width:0%"></span></div><div class="legend-row"><span><i style="background:var(--teal)"></i>recovered / processed</span><span><i style="background:var(--orange)"></i>landfilled</span></div></article>
+    <article class="glass panel"><div class="panel-head"><h3>Network pulse</h3><span>scenario diversion</span></div><div class="impact-note" style="margin-top:18px">Waiting for scenario data…</div></article>
+    <article class="glass panel"><div class="panel-head"><h3>Lifecycle impact</h3><span>annual</span></div><div class="impact-num" id="emissions">—</div><div class="impact-unit">tCO₂e/year avoided</div><div class="impact-diagram"><div class="bubble">🗑</div><div class="bubble-arrow">→</div><div class="bubble">♻</div><div class="bubble-arrow">→</div><div class="bubble">🌱</div></div><div class="impact-note" id="impactNote">Counterfactual: compare modelled recovery with an all-landfilled baseline.</div></article>
   </section>
 
   <section class="thinking-final" id="thinking">
@@ -469,8 +469,8 @@ const thinkingSteps=[
  {no:'01',verb:'SEE',title:'Know the network.',text:'Start with source clusters, facilities, capacity concepts and the evidence state attached to each field.',output:'network picture →'},
  {no:'02',verb:'CHANGE',title:'Stress the city.',text:'Flip an outage, surge or spare-capacity mode and recalculate the same network under different conditions.',output:'scenario →'},
  {no:'03',verb:'SOLVE',title:'Find the next move.',text:'The optimizer compares feasible allocations and turns the scenario into build, retrofit, reroute or hold.',output:'decision →'},
- {no:'04',verb:'EXPLAIN',title:'Show the why.',text:'Structured reasons sit underneath the decision: capacity, modeled cost, route feasibility and baseline comparison.',output:'why →'},
- {no:'05',verb:'MATCH',title:'Give recovery somewhere to go.',text:'Recovered outputs are matched to modeled demand so the value chain stays visible beyond the facility gate.',output:'recovery →'},
+ {no:'04',verb:'EXPLAIN',title:'Show the why.',text:'Structured reasons sit underneath the decision: capacity, modelled cost, route feasibility and baseline comparison.',output:'why →'},
+ {no:'05',verb:'MATCH',title:'Give recovery somewhere to go.',text:'Recovered outputs are matched to modelled demand so the value chain stays visible beyond the facility gate.',output:'recovery →'},
  {no:'06',verb:'VALUE',title:'See the trade-offs.',text:'Financial cost, recovered value and lifecycle impact sit together for a broader view of the move.',output:'cost + impact →'},
  {no:'07',verb:'PROVE',title:'Make the decision legible.',text:'Important outputs keep their evidence state visible — observed, derived, assumed or modelled.',output:'evidence →'}
 ];

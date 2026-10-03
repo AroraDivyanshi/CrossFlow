@@ -222,13 +222,34 @@
     if (label) label.textContent = message;
   }
 
+  // Blank every value that came from a previous run so an error never leaves stale numbers on screen.
+  function clearKpis() {
+    ["throughput", "landfill", "diversion", "power", "emissions", "landfillPressure", "divertedBar", "heroDiversion",
+      "throughputProcessed", "throughputLandfilled"].forEach((id) => setText(id, "—"));
+    setText("landfillState", "N/A");
+    setText("diversionState", "N/A");
+    setText("powerState", "N/A");
+    ["pressureFill", "divertedFill", "landfillFill", "tpProcessedBar", "tpLandfillBar"].forEach((id) => {
+      const n = $(id);
+      if (n) n.style.width = "0%";
+    });
+    const powerFill = $("powerFill");
+    if (powerFill) powerFill.style.setProperty("--power-width", "0%");
+    const ring = $("diversionRing");
+    if (ring) {
+      ring.style.background = "conic-gradient(var(--teal) 0 0%, #e6eee9 0% 100%)";
+      const label = ring.querySelector("span");
+      if (label) label.textContent = "—";
+    }
+  }
+
   function showConnectionError(err) {
     setStatus("⚠ API offline", false);
     setText("decisionTitle", "Can't reach the CrossFlow API");
     setText("decisionText", err?.message || "Start the API server from localloop/backend and reload.");
     const reasonLine = $("reasonLine");
     if (reasonLine) reasonLine.innerHTML = '<span class="reason">NO CONNECTION</span>';
-    ["throughput", "landfill", "diversion", "power"].forEach((id) => setText(id, "—"));
+    clearKpis();
   }
 
   // Facility state for the current run. Uses scenario overrides from /api/scenarios to tell a
@@ -283,7 +304,7 @@
 
     /* ---------- dashboard grid / panels ---------- */
     .cf-dashboard-grid{display:grid;grid-template-columns:.95fr 1.05fr;gap:14px;align-items:start}
-    .cf-left-stack{display:grid;gap:14px;min-width:0}
+    .cf-left-stack{display:grid;gap:14px;min-width:0;align-content:start}
     .cf-panel{background:#fff;border:1px solid var(--line);border-radius:22px;padding:18px;min-width:0;box-shadow:0 10px 25px rgba(31,70,55,.045)}
     .cf-panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
     .cf-panel-head h4{margin:0;font-size:16px;line-height:1.2;letter-spacing:-.025em}
@@ -335,7 +356,7 @@
     .cf-legend .sw-load{background:repeating-linear-gradient(45deg,#c0ccc5,#c0ccc5 2px,#dde5e0 2px,#dde5e0 4px)}
     .cf-legend .sw-lf{background:#e98258}
 
-    .cf-fac-row{display:grid;grid-template-columns:minmax(96px,.85fr) minmax(70px,1.5fr) auto;gap:10px;align-items:center;padding:8px 0;border-top:1px solid #edf2ef}
+    .cf-fac-row{display:grid;grid-template-columns:104px minmax(60px,1fr) 148px;gap:10px;align-items:center;padding:8px 0;border-top:1px solid #edf2ef}
     .cf-fac-row:first-of-type{border-top:0}
     .cf-fac-name{display:flex;align-items:center;gap:6px;min-width:0}
     .cf-fac-name i{width:8px;height:8px;border-radius:3px;flex:none}
@@ -382,8 +403,8 @@
     .cf-tile span{display:block;font-size:7.5px;text-transform:uppercase;letter-spacing:.09em;color:#81938b;font-weight:900}
     .cf-tile b{display:block;margin-top:3px;font-size:19px;letter-spacing:-.04em;color:var(--ink);line-height:1.1}
     .cf-tile small{display:block;margin-top:2px;font-size:7.5px;color:#84958d}
-    .cf-tile.main{background:linear-gradient(145deg,#eef9f4,#f8fcfa);border-color:#cfe8dd}
-    .cf-tile.main b{color:var(--teal-dark)}
+    .cf-tile.hl{background:linear-gradient(145deg,#eef9f4,#f8fcfa);border-color:#cfe8dd}
+    .cf-tile.hl b{color:var(--teal-dark)}
     .cf-meters{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:9px}
     .cf-meter-head{display:flex;justify-content:space-between;align-items:baseline;color:#71857b;font-size:8.5px;font-weight:700}
     .cf-meter-head b{font-size:11px;color:var(--teal-dark)}
@@ -473,9 +494,11 @@
     .cf-map-legend{background:rgba(255,255,255,.95);border-radius:12px;padding:8px 10px;box-shadow:0 4px 16px rgba(16,40,32,.12);font-family:Inter,system-ui,sans-serif}
     .cf-lg-row{display:flex;align-items:center;gap:7px;font-size:10px;font-weight:700;color:#294a3f;line-height:1;margin:5px 0}
     .cf-lg-row:first-child{margin-top:0}.cf-lg-row:last-child{margin-bottom:0}
+    .cf-lg-ico{width:16px;display:flex;justify-content:center}
     .cf-lg-src{width:11px;height:11px;border-radius:50%;background:#ff7a00;border:2px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.15)}
     .cf-lg-fac{width:11px;height:11px;border-radius:3px;background:#2563eb;border:2px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.15)}
     .cf-lg-flow{width:16px;height:4px;border-radius:3px;background:var(--teal);opacity:.8}
+    .cf-lg-note{margin-top:7px;font-size:8px;color:#8aa096;font-weight:700}
     .cf-lg-sep{height:1px;background:#e3ece7;margin:7px 0}
     .cf-lg-dots{display:flex;gap:9px;font-size:8.5px;font-weight:800;color:#6b8379}
     .cf-lg-dots span{display:inline-flex;align-items:center;gap:4px}
@@ -486,7 +509,7 @@
     .cf-pin.fac{border-radius:9px}
     .cf-pin:hover{transform:scale(1.14)}
     .cf-pin.sel{transform:scale(1.22);box-shadow:0 0 0 4px rgba(21,155,131,.38),0 6px 16px rgba(16,40,32,.35)}
-    .cf-pin.dim{opacity:.5}
+    .cf-pin.dim{opacity:.62}
     .cf-pin.bound::after{content:"";position:absolute;inset:-7px;border-radius:inherit;border:2px solid var(--pc);animation:cfPing 1.8s ease-out infinite;pointer-events:none}
     .cf-pin .lf{position:absolute;right:-6px;top:-6px;width:12px;height:12px;border-radius:50%;background:#e98258;border:2px solid #fff}
     @keyframes cfPing{0%{transform:scale(.85);opacity:.7}100%{transform:scale(1.4);opacity:0}}
@@ -520,13 +543,15 @@
       .cf-cap-hero .cf-mini-grid{width:100%}
       .cf-steps{grid-template-columns:1fr}
       .cf-step:not(:last-child)::after{display:none}
-      .cf-pipe{grid-template-columns:1fr}
+      .cf-pipe{grid-template-columns:repeat(3,1fr);gap:6px}
       .cf-pipe-arrow{display:none}
+      .cf-tile b{font-size:16px}
+      .cf-map-detail{width:calc(100% - 32px)}
       .cf-meters{grid-template-columns:1fr}
       .cf-match{grid-template-columns:1fr auto}
       .cf-match-arrow{display:none}
-      .cf-fac-row{grid-template-columns:1fr;gap:5px}
-      .cf-fac-val{justify-content:flex-start}
+      .cf-fac-row{grid-template-columns:118px 1fr;gap:6px 10px}
+      .cf-fac-val{grid-column:1/-1;justify-content:flex-start}
       .cf-pulse-labels{grid-template-columns:1fr 1fr}
       .thinking-final .decision-dial{grid-template-columns:repeat(2,minmax(0,1fr)) !important}
       .cf-map-detail{bottom:50px}
@@ -704,7 +729,7 @@
     if (r.status !== "Optimal") {
       setText("decisionTitle", "Scenario infeasible");
       setText("decisionText", r.message || "The solver could not find a feasible allocation.");
-      ["throughput", "landfill", "diversion", "power"].forEach((id) => setText(id, "—"));
+      clearKpis();
       renderCompactDecisionChain(result);
       renderCapacityPanel(result);
       renderWhyPanel(result);
@@ -717,6 +742,12 @@
     const allocatedTotal = sum(Object.values(r.tonnes_allocated_tpd || {}));
     const totalGenerated = allocatedTotal + Number(r.total_landfilled_tpd || 0);
     setText("throughput", fmt(totalGenerated));
+    setText("throughputProcessed", fmt(allocatedTotal, 0));
+    setText("throughputLandfilled", fmt(r.total_landfilled_tpd || 0, 0));
+    const tpP = $("tpProcessedBar");
+    const tpL = $("tpLandfillBar");
+    if (tpP) tpP.style.width = (totalGenerated > 0 ? (allocatedTotal / totalGenerated) * 100 : 0) + "%";
+    if (tpL) tpL.style.width = (totalGenerated > 0 ? (Number(r.total_landfilled_tpd || 0) / totalGenerated) * 100 : 0) + "%";
 
     const throughputNote = document.querySelector("#throughputCard .note");
     if (throughputNote) {
@@ -967,7 +998,7 @@
           <div><b>${Math.round(util)}%</b><small>${incremental ? "spare used" : "capacity used"}</small></div>
         </div>
         <div class="cf-mini-grid">
-          <div class="cf-mini accent"><span>${incremental ? "Modeled spare" : "Capacity"}</span><b>${fmt(totalAvailable, 0)}<em>TPD</em></b></div>
+          <div class="cf-mini accent"><span>${incremental ? "Modelled spare" : "Capacity"}</span><b>${fmt(totalAvailable, 0)}<em>TPD</em></b></div>
           <div class="cf-mini"><span>Allocated</span><b>${fmt(totalAllocated, 0)}<em>TPD</em></b></div>
           <div class="cf-mini"><span>Remaining</span><b>${fmt(totalRemaining, 0)}<em>${binding.size} full</em></b></div>
           <div class="cf-mini ${landfilled > 0 ? "warn" : ""}"><span>Landfilled</span><b>${fmt(landfilled, 0)}<em>TPD</em></b></div>
@@ -1017,9 +1048,11 @@
     const facility = fid ? displayName(fid) : "Network";
     const info = fid ? result.explanation?.facility_decisions?.[fid] : null;
     const reasons = info?.reasons || [];
-    const reasonCodes = reasons.map((raw) => String(raw).split(":")[0]);
+    const codeOf = (raw) => (String(raw).match(/^[A-Z][A-Z_]+/) || [""])[0];
+    const reasonCodes = reasons.map(codeOf);
     const binding = new Set(r.capacity_binding || []);
     const isBinding = fid ? binding.has(fid) : false;
+    const isOffline = fid ? facilityLiveStatus(fid, result)?.key === "offline" : false;
     const scenarioLabel = SCENARIO_LABELS[result.scenario] || prettyId(result.scenario);
     const action = allStable ? "Hold" : titleCaseDecision(decision);
     const actionReason = reasons[0] ? humanizeReason(reasons[0]) : null;
@@ -1028,7 +1061,11 @@
     let constraintText = isBinding
       ? "This facility is at its modelled capacity."
       : "The current run leaves modelled room at this facility.";
-    const constraintReason = reasons.find((raw) => /CAPACITY_BINDING|CAPACITY/i.test(String(raw)));
+    if (isOffline) {
+      constraintTitle = "Offline";
+      constraintText = "This facility is unavailable in this scenario; its flow is redirected.";
+    }
+    const constraintReason = isOffline ? null : reasons.find((raw) => /CAPACITY_BINDING|CAPACITY/i.test(String(raw)));
     if (constraintReason) {
       const parsed = humanizeReason(constraintReason);
       constraintTitle = parsed.title || constraintTitle;
@@ -1040,7 +1077,7 @@
       : actionReason?.text || "The solver selected this facility-level action for the current scenario.";
 
     const extraCodes = reasonCodes
-      .filter((code) => !["NO_CHANGE_FROM_BASELINE_ALLOCATION", "CAPACITY_BINDING", "CAPACITY_BINDING_AT_DESTINATION"].includes(code))
+      .filter((code) => code && !["BUILD", "RETROFIT", "REROUTE", "DO_NOTHING", "NO_CHANGE_FROM_BASELINE_ALLOCATION", "CAPACITY_BINDING", "CAPACITY_BINDING_AT_DESTINATION"].includes(code))
       .slice(0, 3);
 
     // where each source's waste goes (real flows_tpd / landfilled_tpd)
@@ -1069,7 +1106,11 @@
       .map((id) => `<span><i style="background:${colorOf(id)}"></i>${esc(shortName(id))}</span>`)
       .join("") + (anyLandfill ? `<span><i class="sw-lf"></i>landfill</span>` : "");
 
-    const dchips = Object.entries(result.decisions || {})
+    const decEntries = Object.entries(result.decisions || {});
+    const uniform = decEntries.length > 1 && decEntries.every(([, d]) => d === decEntries[0][1]);
+    const dchips = uniform
+      ? `<span class="cf-dchip ${esc(decEntries[0][1])}">All ${decEntries.length} facilities<em>${esc(titleCaseDecision(decEntries[0][1]))}</em></span>`
+      : decEntries
       .map(([id, dec]) => `<span class="cf-dchip ${esc(dec)}"><i style="background:${colorOf(id)}"></i>${esc(shortName(id))}<em>${esc(titleCaseDecision(dec))}</em></span>`)
       .join("");
 
@@ -1086,7 +1127,7 @@
           <span>
             <span class="cf-badge neutral">${esc(scenarioLabel)}</span>
             <span class="cf-badge info">${esc(modeInfo(mode).label)}</span>
-            <span class="cf-badge ${isBinding ? "full" : "ok"}">${isBinding ? "capacity bound" : "capacity free"}</span>
+            <span class="cf-badge ${isOffline ? "off" : isBinding ? "full" : "ok"}">${isOffline ? "offline" : isBinding ? "capacity bound" : "capacity free"}</span>
           </span>
         </div>
         <span class="cf-badge neutral">${esc(result.mode || "demo")}</span>
@@ -1095,7 +1136,7 @@
       <div class="cf-steps">
         <div class="cf-step"><div class="cf-step-k"><i>${esc(DECISION_ICON[decision] || "●")}</i>Action</div>
           <b>${esc(action)}</b><span title="${esc(actionText)}">${esc(actionText)}</span></div>
-        <div class="cf-step ${isBinding ? "warn" : ""}"><div class="cf-step-k"><i>${isBinding ? "!" : "✓"}</i>Constraint</div>
+        <div class="cf-step ${isBinding || isOffline ? "warn" : ""}"><div class="cf-step-k"><i>${isBinding || isOffline ? "!" : "✓"}</i>Constraint</div>
           <b>${esc(constraintTitle)}</b><span title="${esc(constraintText)}">${esc(constraintText)}</span></div>
         <div class="cf-step"><div class="cf-step-k"><i>◎</i>Context</div>
           <b>${esc(scenarioLabel)}</b><span title="${esc(modeInfo(mode).sub)}">${esc(modeInfo(mode).sub)}</span></div>
@@ -1112,7 +1153,7 @@
         <span class="cf-badge neutral">Evidence</span>
         ${extraCodes.length
           ? extraCodes.map((code) => `<span class="cf-badge info">${esc(REASONS[code]?.[0] || prettyId(code))}</span>`).join("")
-          : "<span>No additional facility-level explanation was returned.</span>"}
+          : "<span>No further facility-level reasons returned.</span>"}
       </div>
     `;
   }
@@ -1174,7 +1215,7 @@
       const remains = [];
       if (unused > 0) remains.push(`<span class="cf-remain">unused recovered <b>${fmt(unused)} ${esc(lab.unit)}</b></span>`);
       if (unmet > 0) remains.push(`<span class="cf-remain">unmet demand <b>${fmtQ(unmet)} ${esc(lab.unit)}</b></span>`);
-      if (!remains.length) remains.push('<span class="cf-remain good">all supplied output finds a modeled destination</span>');
+      if (!remains.length) remains.push('<span class="cf-remain good">all recovered output finds a modelled destination</span>');
 
       return `
         <div class="cf-out-card">
@@ -1186,7 +1227,7 @@
           <div class="cf-pipe">
             <div class="cf-tile"><span>Recovered</span><b>${fmtQ(supply)}</b><small>${esc(lab.unit)}</small></div>
             <div class="cf-pipe-arrow">›</div>
-            <div class="cf-tile main"><span>Matched</span><b>${fmtQ(matched)}</b><small>${esc(lab.unit)}</small></div>
+            <div class="cf-tile hl"><span>Matched</span><b>${fmtQ(matched)}</b><small>${esc(lab.unit)}</small></div>
             <div class="cf-pipe-arrow">›</div>
             <div class="cf-tile"><span>Demand</span><b>${fmtQ(demand)}</b><small>${esc(lab.unit)}</small></div>
           </div>
@@ -1480,7 +1521,9 @@
         const dot = { steady: "ok", rerouted: "warn", offline: "off", built: "build", retrofit: "retrofit" }[st.key] || "neutral";
         badges = `<span class="cf-badge ${dot}">${esc(st.label)}</span>` +
           (st.binding ? '<span class="cf-badge full">Capacity bound</span>' : "") + badges;
-        if (Number.isFinite(st.allocated) && Number.isFinite(st.base) && st.base > 0) {
+        if (st.key === "offline") {
+          body += `<div class="cf-md-row"><span>Available this run</span><b>0 TPD (outage)</b></div>`;
+        } else if (Number.isFinite(st.allocated) && Number.isFinite(st.base) && st.base > 0) {
           const p = pct((st.allocated / st.base) * 100);
           body += `
             <div class="cf-md-row"><span>Allocated</span><b>${fmt(st.allocated, 0)} / ${fmt(st.base, 0)} TPD</b></div>
@@ -1613,15 +1656,16 @@
     legend.onAdd = function () {
       const box = L.DomUtil.create("div", "leaflet-control cf-map-legend");
       box.innerHTML = `
-        <div class="cf-lg-row"><span class="cf-lg-src"></span>Waste source</div>
-        <div class="cf-lg-row"><span class="cf-lg-fac"></span>Facility</div>
-        <div class="cf-lg-row"><span class="cf-lg-flow"></span>Flow · width = TPD</div>
+        <div class="cf-lg-row"><span class="cf-lg-ico"><span class="cf-lg-src"></span></span>Waste source</div>
+        <div class="cf-lg-row"><span class="cf-lg-ico"><span class="cf-lg-fac"></span></span>Facility</div>
+        <div class="cf-lg-row"><span class="cf-lg-ico"><span class="cf-lg-flow"></span></span>Flow · width = TPD</div>
         <div class="cf-lg-sep"></div>
         <div class="cf-lg-dots">
           <span><i style="background:${STATUS_COLORS.steady}"></i>steady</span>
           <span><i style="background:${STATUS_COLORS.rerouted}"></i>rerouted</span>
           <span><i style="background:${STATUS_COLORS.offline}"></i>offline</span>
-        </div>`;
+        </div>
+        <div class="cf-lg-note">Locations approximate (demo)</div>`;
       L.DomEvent.disableClickPropagation(box);
       return box;
     };
@@ -1671,7 +1715,7 @@
         ${totalTpd > 0 ? `<span class="map-chip">${formatCompact(totalTpd)} TPD network</span>` : ""}`;
     }
 
-    setText("mapCaption", "Delhi · live network");
+    setText("mapCaption", "Delhi · approximate locations");
 
     if (mapSection) {
       mapSection.querySelectorAll(".map-water,.delhi,.route,.zone,.hub,#cfMapPaused").forEach((node) => {
@@ -1762,6 +1806,7 @@
     } catch (err) {
       if (seq !== runSeq) return;
       console.error("runScenario failed", id, mode, err);
+      clearKpis();
       if (err instanceof CrossFlowAPI.ApiError && err.status === 0) {
         showConnectionError(err);
       } else if (err instanceof CrossFlowAPI.ApiError && err.status === 422) {
@@ -1841,6 +1886,12 @@
     try {
       [scenarios, network] = await Promise.all([CrossFlowAPI.scenarios(), CrossFlowAPI.network()]);
     } catch (err) {
+      if (err instanceof CrossFlowAPI.ApiError && err.status !== 0) {
+        setStatus("API error", false);
+        setText("decisionTitle", "The CrossFlow API returned an error");
+        setText("decisionText", err.message || "Check the API server log and reload.");
+        return;
+      }
       showConnectionError(err);
       return;
     }

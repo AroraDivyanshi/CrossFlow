@@ -279,7 +279,7 @@ body{font-size:16px;letter-spacing:.001em}
   <section class="scenario-bar">
     <div class="glass select-card"><label for="scenario">Scenario</label><select id="scenario"><option value="baseline">Baseline</option><option value="ghazipur_outage">Ghazipur outage</option><option value="festival_surge_mcd_20pct">Festival surge +20%</option><option value="monsoon_surge_30pct">Monsoon surge +30%</option><option value="spare_capacity_demo">Spare-capacity demo</option></select></div>
     <div class="glass select-card"><label for="capacity">Capacity logic</label><select id="capacity"><option value="total_network">Total network</option><option value="incremental_spare">Incremental spare</option></select></div>
-    <div class="mode-note"><span class="float2">✦</span><div><b>Evidence-aware</b><br><span>mock values follow the frozen JSON contract</span></div></div>
+    <div class="mode-note"><span class="float2">✦</span><div><b>Evidence-aware</b><br><span>live API · evidence-labelled values</span></div></div>
     <button class="btn primary" onclick="updateScenario()">Run →</button>
   </section>
 
@@ -448,11 +448,8 @@ body{font-size:16px;letter-spacing:.001em}
 <script src="js/api-client.js"></script>
 <script src="js/app.js"></script>
 <script>
-// NOTE: scenario/KPI/decision data is now live -- see js/app.js (window.updateScenario) and
-// js/api-client.js. The mock `data` object and static updateScenario() that used to live here
-// have been removed; everything below this point (Recipe Lab presets, the decision dial) is
-// still V11's original illustrative content, unchanged.
-// Recipe Lab is now wired to the real /api/recipe endpoint -- see js/app.js (window.runRecipePreset).
+// NOTE: scenario/KPI/decision data is live -- see js/app.js (window.updateScenario / window.selectScenario)
+// and js/api-client.js. Recipe Lab is wired to the real /api/recipe endpoint (window.runRecipePreset).
 // Feedstock presets (input profiles, not fabricated outputs) live in app.js's RECIPE_PRESETS.
 document.querySelectorAll('.feed').forEach(btn => btn.addEventListener('click', () => {
   document.querySelectorAll('.feed').forEach(b => b.classList.remove('active'));
@@ -460,9 +457,10 @@ document.querySelectorAll('.feed').forEach(btn => btn.addEventListener('click', 
   window.runRecipePreset(btn.dataset.feed);
 }));
 
+// Hero bars: selectScenario() also syncs the capacity select to that scenario's natural mode,
+// so a bar click can never run (e.g.) baseline against a stale "incremental spare" selection.
 document.querySelectorAll('.scenario-bar-col').forEach(col=>col.addEventListener('click',()=>{
- document.getElementById('scenario').value=col.dataset.scenario;
- updateScenario();
+ window.selectScenario(col.dataset.scenario);
  document.getElementById('scenario').blur();
 }));
 // initial render is triggered by js/app.js's own init() once scenario/network metadata loads

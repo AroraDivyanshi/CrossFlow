@@ -197,10 +197,17 @@
     return { fid, decision, allStable: entries.every(([, d]) => d === "DO_NOTHING") };
   }
 
+  // backend reasons embed Python lists like ['GHAZIPUR_WTE'] -- show readable names instead
+  function sanitizeIds(text) {
+    return String(text || "").replace(/\[([^\]]*)\]/g, (m, inner) =>
+      inner.split(",").map((x) => x.replace(/['"\s]/g, "")).filter(Boolean).map((id) => shortName(id)).join(", "));
+  }
+
   function humanizeReason(raw) {
-    const str = String(raw || "");
-    const match = str.match(/^([A-Z][A-Z_]+)/);
+    const original = String(raw || "");
+    const match = original.match(/^([A-Z][A-Z_]+)/);
     const code = match ? match[1] : "";
+    const str = sanitizeIds(original);
     const entry = REASONS[code];
     if (!entry) {
       return { title: prettyId(code) || "Reason", text: str.slice(code.length).replace(/^[:\s]+/, "") };
@@ -356,7 +363,7 @@
     .cf-legend .sw-load{background:repeating-linear-gradient(45deg,#c0ccc5,#c0ccc5 2px,#dde5e0 2px,#dde5e0 4px)}
     .cf-legend .sw-lf{background:#e98258}
 
-    .cf-fac-row{display:grid;grid-template-columns:104px minmax(60px,1fr) 148px;gap:10px;align-items:center;padding:8px 0;border-top:1px solid #edf2ef}
+    .cf-fac-row{display:grid;grid-template-columns:122px minmax(60px,1fr) 140px;gap:10px;align-items:center;padding:8px 0;border-top:1px solid #edf2ef}
     .cf-fac-row:first-of-type{border-top:0}
     .cf-fac-name{display:flex;align-items:center;gap:6px;min-width:0}
     .cf-fac-name i{width:8px;height:8px;border-radius:3px;flex:none}
@@ -378,7 +385,7 @@
     .cf-step-k i{width:18px;height:18px;border-radius:6px;background:var(--mint);color:var(--teal-dark);display:grid;place-items:center;font-style:normal;font-size:10px}
     .cf-step.warn .cf-step-k i{background:#fff0e9;color:#c0501f}
     .cf-step b{display:block;margin-top:7px;font-size:11px;color:var(--ink);line-height:1.2}
-    .cf-step span{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-top:3px;font-size:8.5px;line-height:1.4;color:#788b82}
+    .cf-step span{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;margin-top:3px;font-size:8.5px;line-height:1.4;color:#788b82}
     .cf-route-row{display:grid;grid-template-columns:62px 1fr 62px;gap:9px;align-items:center;padding:5px 0}
     .cf-route-row b{font-size:10px;color:var(--ink)}
     .cf-route-row small{font-size:8.5px;color:#84958e;text-align:right;white-space:nowrap}
@@ -530,6 +537,62 @@
     .cf-md-feeds span{display:inline-flex;align-items:center;gap:5px;padding:3px 7px;border-radius:999px;background:#f5f9f7;border:1px solid #e1ebe6;font-size:8.5px;color:#4f685d;font-weight:800}
     .cf-md-feeds i{width:7px;height:7px;border-radius:50%}
 
+    /* ---------- final polish ---------- */
+    .cf-kick{font-size:9px;letter-spacing:.14em;text-transform:uppercase;font-weight:900;color:var(--teal-dark);margin-bottom:3px}
+    .cf-panel-head h4{font-size:18px}
+    .cf-panel{padding:20px}
+    .cf-pill{font-size:9px}
+    .cf-sec{font-size:9px;margin:16px 0 7px}
+    .cf-foot{font-size:9.5px;margin-top:14px}
+    .cf-badge{font-size:9px;padding:3px 8px}
+    .cf-delta{font-size:9px}
+    .cf-chainitem small{font-size:9px}
+    .cf-chainitem b{font-size:16px}
+    .cf-chainitem span{font-size:10px}
+    .cf-mini span{font-size:8.5px}.cf-mini b{font-size:20px}.cf-mini b em{font-size:9px}
+    .cf-ring small{font-size:8px;max-width:70px;line-height:1.2}
+    .cf-legend{font-size:9.5px}
+    .cf-fac-name b{font-size:11px}.cf-fac-bar small{font-size:9px}.cf-fac-val b{font-size:11px}
+    .cf-step-k{font-size:8.5px}.cf-step b{font-size:12px}.cf-step span{font-size:10px;line-height:1.4}
+    .cf-route-row b{font-size:11px}.cf-route-row small{font-size:9.5px}
+    .cf-dchip{font-size:9.5px}.cf-dchip em{font-size:8.5px}
+    .cf-out-head b{font-size:14px}
+    .cf-tile span{font-size:8.5px}.cf-tile b{font-size:21px}.cf-tile small{font-size:9px}
+    .cf-meter-head{font-size:10px}.cf-meter-head b{font-size:12px}
+    .cf-meter-head em{font-style:normal;font-weight:600;color:#8a9b93;font-size:9px;margin-left:3px}
+    .cf-chip-node b{font-size:10.5px}.cf-match-qty b{font-size:11px}
+    .cf-remain{font-size:9.5px}
+    .cf-out-card{padding:14px;margin-top:14px}
+    .cf-match{padding:8px 10px}
+    .cf-imp-row{display:flex;justify-content:space-between;align-items:baseline;margin-top:10px;font-size:10px;color:#71837b;font-weight:700}
+    .cf-imp-row b{font-size:12px;color:var(--ink)}
+    .cf-imp-track{height:7px;border-radius:999px;background:#eaf0ec;overflow:hidden;margin-top:4px}
+    .cf-imp-track i{display:block;height:100%;border-radius:inherit;transition:width .5s ease}
+    .cf-imp-unit{margin-top:8px;font-size:9px;color:#8a9b93}
+    .decision-option.primary{background:var(--teal);border-color:var(--teal);box-shadow:0 8px 18px rgba(21,155,131,.22)}
+    .decision-option.primary span{color:#d9f3ea}.decision-option.primary b{color:#fff}
+    .decision-option span{font-size:9px}.decision-option b{font-size:11px}
+    .reason{font-size:9.5px;padding:6px 10px}
+    .decision .move h3{font-size:36px;letter-spacing:-.05em}
+    .decision .move p{font-size:12.5px;line-height:1.5}
+    .scope{font-size:9.5px;max-width:62%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .map-stats .map-chip{font-size:10px}
+    .cf-pin{border-width:3px;box-shadow:0 0 0 1px rgba(16,40,32,.28),0 4px 12px rgba(16,40,32,.32)}
+    .cf-pin.sel{box-shadow:0 0 0 3px #fff,0 0 0 6px rgba(13,116,99,.75),0 8px 18px rgba(16,40,32,.38)}
+    .cf-lg-row{font-size:10.5px}.cf-lg-dots{font-size:9.5px}.cf-lg-note{font-size:9px}
+    .cf-map-detail{padding:14px 15px;bottom:54px;width:min(288px,calc(100% - 32px))}
+    .cf-md-name{margin:9px 0 8px;font-size:15px}
+    .cf-md-badges{margin-bottom:11px;gap:6px}
+    .cf-md-row{font-size:10.5px;margin-bottom:6px}
+    .cf-md-feeds{margin-top:11px;gap:6px}.cf-md-feeds span{font-size:9.5px;padding:3px 8px}
+    #impact{align-items:start}
+    #impact .legend-row{font-size:10.5px;gap:14px;margin-top:12px;flex-wrap:wrap}
+    #impact .legend-row i{width:9px;height:9px}
+    #impact .chart-label{font-size:11px}
+    #impact .impact-note{font-size:10.5px}
+    #impact .impact-unit{font-size:10.5px}
+    .cf-pulse-label{font-size:8.5px}.cf-pulse-label b{font-size:10px}.cf-pulse-note{font-size:9px}
+
     /* ---------- responsive ---------- */
     @media(max-width:1180px){
       .cf-dashboard-grid{grid-template-columns:1fr}
@@ -544,6 +607,9 @@
       .cf-steps{grid-template-columns:1fr}
       .cf-step:not(:last-child)::after{display:none}
       .cf-pipe{grid-template-columns:repeat(3,1fr);gap:6px}
+      .cf-tile span{font-size:7.5px;letter-spacing:.05em}
+      .decision .move h3{font-size:30px}
+      .scope{max-width:100%}
       .cf-pipe-arrow{display:none}
       .cf-tile b{font-size:16px}
       .cf-map-detail{width:calc(100% - 32px)}
@@ -573,10 +639,10 @@
     section.className = "cf-clean";
     section.innerHTML = `
       <div class="cf-chainbar">
-        <div class="cf-chainitem"><small>01 · Recipe</small><b id="cfChainRecipe">—</b><span id="cfChainRecipeText">Feedstock fit</span></div>
-        <div class="cf-chainitem"><small>02 · Capacity</small><b id="cfChainCapacity">—</b><span id="cfChainCapacityText">Usable room</span></div>
-        <div class="cf-chainitem"><small>03 · Optimizer</small><b id="cfChainDecision">—</b><span id="cfChainDecisionText">Network action</span></div>
-        <div class="cf-chainitem"><small>04 · Output</small><b id="cfChainOutput">—</b><span id="cfChainOutputText">Useful recovery</span></div>
+        <div class="cf-chainitem"><small>1 · Scenario</small><b id="cfChainScenario">—</b><span id="cfChainScenarioText">&nbsp;</span></div>
+        <div class="cf-chainitem"><small>2 · Impact</small><b id="cfChainImpact">—</b><span id="cfChainImpactText">&nbsp;</span></div>
+        <div class="cf-chainitem"><small>3 · Decision</small><b id="cfChainDecision">—</b><span id="cfChainDecisionText">&nbsp;</span></div>
+        <div class="cf-chainitem"><small>4 · Output</small><b id="cfChainOutput">—</b><span id="cfChainOutputText">&nbsp;</span></div>
       </div>
       <div class="cf-dashboard-grid">
         <div class="cf-left-stack">
@@ -734,6 +800,7 @@
       renderCapacityPanel(result);
       renderWhyPanel(result);
       renderMatchingPanel(result);
+      renderImpactDetail(null);
       renderPulse();
       return;
     }
@@ -803,23 +870,28 @@
     // ---- Headline decision ----
     const { fid, decision, allStable } = pickHeadline(decisions);
 
-    setText("scopeTag", mInfo.label.toUpperCase());
+    const scenarioLabel = SCENARIO_LABELS[scenarioId] || prettyId(scenarioId);
+    setText("scopeTag", `${scenarioLabel} · ${mInfo.label}`);
     const scopeTag = $("scopeTag");
-    if (scopeTag) scopeTag.title = `${mode} — ${mInfo.sub}`;
+    if (scopeTag) scopeTag.title = `Scenario: ${scenarioLabel} — ${mode}: ${mInfo.sub}`;
 
     setText("moveIcon", decision && DECISION_ICON[decision] ? DECISION_ICON[decision] : "●");
 
     if (!fid) {
-      setText("decisionTitle", "No facilities in this run");
+      setText("decisionTitle", "No decision");
       setText("decisionText", "This scenario produced no facility decisions.");
     } else if (allStable) {
-      setText("decisionTitle", "Network stable");
-      setText("decisionText", "The optimized allocation stays at baseline.");
+      setText("decisionTitle", "Hold");
+      setText("decisionText", `All ${Object.keys(decisions).length} facilities keep their baseline allocation.`);
     } else {
-      setText("decisionTitle", `${titleCaseDecision(decision)} · ${displayName(fid)}`);
+      setText("decisionTitle", titleCaseDecision(decision));
       const info = result.explanation?.facility_decisions?.[fid];
       const reason = info?.reasons?.[info.reasons.length - 1];
-      setText("decisionText", reason ? humanizeReason(reason).text : "Decision explanation unavailable.");
+      const others = Object.values(decisions).filter((d) => d !== "DO_NOTHING").length - 1;
+      setText(
+        "decisionText",
+        `${displayName(fid)}${others > 0 ? ` (+${others} more)` : ""} — ${reason ? humanizeReason(reason).text : "explanation unavailable"}`
+      );
     }
 
     const reasonLine = $("reasonLine");
@@ -838,6 +910,7 @@
       const node = $(id);
       if (!node) return;
       node.classList.toggle("active", occurring.has(type));
+      node.classList.toggle("primary", type === decision);
       const span = node.querySelector("span");
       const b = node.querySelector("b");
       if (span) span.textContent = DECISIONS[type].label.toUpperCase();
@@ -846,6 +919,12 @@
 
     // ---- Lower analytics ----
     setText("divertedBar", diversion == null ? "—" : diversion.toFixed(1) + "%");
+    const legend = document.querySelector("#impact .legend-row");
+    if (legend) {
+      legend.innerHTML =
+        `<span><i style="background:var(--teal)"></i>processed ${fmt(allocatedTotal, 0)} TPD</span>` +
+        `<span><i style="background:var(--orange)"></i>landfilled ${fmt(r.total_landfilled_tpd || 0, 0)} TPD</span>`;
+    }
     const divertedFill = $("divertedFill");
     const landfillFill = $("landfillFill");
     if (divertedFill) divertedFill.style.width = (diversion || 0) + "%";
@@ -855,11 +934,14 @@
     setText("emissions", avoided == null ? "—" : formatCompact(avoided));
 
     if (econ) {
+      const net = econ.net_annual_cost_after_recovery_rs?.value;
       setText(
         "impactNote",
-        `Modelled against an all-landfilled baseline · financial cost ₹${formatCompact(econ.financial_cost_rs_per_year?.value)}/yr.`
+        `Modelled vs an all-landfilled baseline · financial cost ₹${formatCompact(econ.financial_cost_rs_per_year?.value)}/yr` +
+          (net != null ? ` (₹${formatCompact(net)}/yr net of recovered power).` : ".")
       );
     }
+    renderImpactDetail(econ);
 
     renderHeroStrip(scenarioId);
     renderCompactDecisionChain(result);
@@ -869,31 +951,45 @@
     renderPulse();
   }
 
+  function renderImpactDetail(econ) {
+    const host = $("impactDetail");
+    if (!host) return;
+    const li = econ?.lifecycle_impact_tco2e_per_year;
+    const cf = li?.counterfactual_if_all_landfilled?.value;
+    const act = li?.total_actual_emissions?.value;
+    if (cf == null || act == null) {
+      host.innerHTML = "";
+      return;
+    }
+    const base = Math.max(cf, act, 1);
+    host.innerHTML = `
+      <div class="cf-imp-row"><span>If all landfilled</span><b>${formatCompact(cf)}</b></div>
+      <div class="cf-imp-track"><i style="width:${pct((cf / base) * 100)}%;background:#c5d3cb"></i></div>
+      <div class="cf-imp-row"><span>This scenario</span><b>${formatCompact(act)}</b></div>
+      <div class="cf-imp-track"><i style="width:${pct((act / base) * 100)}%;background:var(--teal)"></i></div>`;
+  }
+
   // ---------------------------------------------------------------------------
   // Decision chain
   // ---------------------------------------------------------------------------
 
   function renderCompactDecisionChain(result) {
     const r = result.optimizer_result || {};
-    const mode = result.capacity_mode || "";
+    const econ = result.economics;
     const { fid, decision, allStable } = pickHeadline(result.decisions || {});
-    const spare = sum(Object.values(r.base_capacity_tpd || {}));
-    const output = result.output_matching?.by_output_type?.power_mwh?.total_matched_per_day;
-    const recipe = lastRecipe?.result;
-    const top = recipe?.ranked_by_compatibility?.[0];
-    const topMethod = top ? METHOD_LABELS[top] || prettyId(top) : "Run Recipe Lab";
+    const ok = r.status === "Optimal";
+    const scenarioLabel = SCENARIO_LABELS[result.scenario] || prettyId(result.scenario);
+    const div = econ?.landfill_diversion_pct?.value;
+    const power = result.output_matching?.by_output_type?.power_mwh?.total_matched_per_day;
 
-    setText("cfChainRecipe", topMethod);
-    setText(
-      "cfChainRecipeText",
-      top ? `${Math.round(recipe.methods[top].compatibility_score)} / 100 fit` : "Feedstock fit"
-    );
-    setText("cfChainCapacity", spare ? `${fmt(spare, 0)} TPD` : "—");
-    setText("cfChainCapacityText", mode === "incremental_spare" ? "spare room" : "installed capacity");
-    setText("cfChainDecision", allStable ? "Hold" : titleCaseDecision(decision));
-    setText("cfChainDecisionText", fid ? displayName(fid) : "network action");
-    setText("cfChainOutput", output == null ? "—" : `${fmt(output, 0)} MWh/d`);
-    setText("cfChainOutputText", "matched recovery");
+    setText("cfChainScenario", scenarioLabel);
+    setText("cfChainScenarioText", modeInfo(result.capacity_mode).label);
+    setText("cfChainImpact", ok && div != null ? `${div.toFixed(1)}% diverted` : "—");
+    setText("cfChainImpactText", ok ? `${fmt(r.total_landfilled_tpd || 0, 0)} TPD landfilled` : "no feasible run");
+    setText("cfChainDecision", ok ? (allStable ? "Hold" : titleCaseDecision(decision)) : "—");
+    setText("cfChainDecisionText", ok ? (fid ? (allStable ? "all facilities" : shortName(fid)) : "network action") : "—");
+    setText("cfChainOutput", power == null ? "—" : `${fmt(power, 0)} MWh/d`);
+    setText("cfChainOutputText", "power matched to demand");
   }
 
   // ---------------------------------------------------------------------------
@@ -930,7 +1026,7 @@
 
     if (!rows.length) {
       host.innerHTML = `
-        <div class="cf-panel-head"><div><h4>Spare capacity / allocation</h4>
+        <div class="cf-panel-head"><div><div class="cf-kick">Impact</div><h4>Spare capacity / allocation</h4>
         <p>No facility capacity data was returned for this run.</p></div></div>`;
       return;
     }
@@ -989,19 +1085,19 @@
 
     host.innerHTML = `
       <div class="cf-panel-head">
-        <div><h4>Spare capacity / allocation</h4></div>
+        <div><div class="cf-kick">Impact</div><h4>Spare capacity / allocation</h4></div>
         <span class="cf-pill" title="${esc(modeInfo(mode).sub)}">${esc(modeInfo(mode).label)}</span>
       </div>
 
       <div class="cf-cap-hero">
         <div class="cf-ring" style="--p:${util}%;--c:${ringColor}">
-          <div><b>${Math.round(util)}%</b><small>${incremental ? "spare used" : "capacity used"}</small></div>
+          <div><b>${Math.round(util)}%</b><small>${incremental ? "of spare allocated" : "of capacity allocated"}</small></div>
         </div>
         <div class="cf-mini-grid">
-          <div class="cf-mini accent"><span>${incremental ? "Modelled spare" : "Capacity"}</span><b>${fmt(totalAvailable, 0)}<em>TPD</em></b></div>
+          <div class="cf-mini accent"><span>${incremental ? "Spare available" : "Capacity available"}</span><b>${fmt(totalAvailable, 0)}<em>TPD</em></b></div>
           <div class="cf-mini"><span>Allocated</span><b>${fmt(totalAllocated, 0)}<em>TPD</em></b></div>
-          <div class="cf-mini"><span>Remaining</span><b>${fmt(totalRemaining, 0)}<em>${binding.size} full</em></b></div>
-          <div class="cf-mini ${landfilled > 0 ? "warn" : ""}"><span>Landfilled</span><b>${fmt(landfilled, 0)}<em>TPD</em></b></div>
+          <div class="cf-mini"><span>Free</span><b>${fmt(totalRemaining, 0)}<em>${binding.size} full</em></b></div>
+          <div class="cf-mini ${landfilled > 0 ? "warn" : ""}"><span>Sent to landfill</span><b>${fmt(landfilled, 0)}<em>TPD</em></b></div>
         </div>
       </div>
 
@@ -1116,7 +1212,7 @@
 
     host.innerHTML = `
       <div class="cf-panel-head">
-        <div><h4>Why this move?</h4></div>
+        <div><div class="cf-kick">Why</div><h4>Why this move?</h4></div>
         <span class="cf-pill">live explanation</span>
       </div>
 
@@ -1180,7 +1276,7 @@
 
     if (!om) {
       host.innerHTML = `
-        <div class="cf-panel-head"><div><h4>Output-first matching</h4>
+        <div class="cf-panel-head"><div><div class="cf-kick">Output</div><h4>Output-first matching</h4>
         <p>No output matching was returned for this run.</p></div></div>`;
       return;
     }
@@ -1225,20 +1321,20 @@
           </div>
 
           <div class="cf-pipe">
-            <div class="cf-tile"><span>Recovered</span><b>${fmtQ(supply)}</b><small>${esc(lab.unit)}</small></div>
+            <div class="cf-tile"><span>Recovered output</span><b>${fmtQ(supply)}</b><small>${esc(lab.unit)}</small></div>
             <div class="cf-pipe-arrow">›</div>
-            <div class="cf-tile hl"><span>Matched</span><b>${fmtQ(matched)}</b><small>${esc(lab.unit)}</small></div>
+            <div class="cf-tile hl"><span>Matched to demand</span><b>${fmtQ(matched)}</b><small>${esc(lab.unit)}</small></div>
             <div class="cf-pipe-arrow">›</div>
-            <div class="cf-tile"><span>Demand</span><b>${fmtQ(demand)}</b><small>${esc(lab.unit)}</small></div>
+            <div class="cf-tile"><span>Modelled demand</span><b>${fmtQ(demand)}</b><small>${esc(lab.unit)}</small></div>
           </div>
 
           <div class="cf-meters">
             <div>
-              <div class="cf-meter-head"><span>Output used</span><b>${utilization.toFixed(1)}%</b></div>
+              <div class="cf-meter-head"><span>Output matched <em>of recovered</em></span><b>${utilization.toFixed(1)}%</b></div>
               <div class="cf-track"><i style="width:${pct(utilization)}%"></i></div>
             </div>
             <div>
-              <div class="cf-meter-head"><span>Demand fulfilled</span><b class="alt">${fulfilment.toFixed(1)}%</b></div>
+              <div class="cf-meter-head"><span>Demand met <em>of modelled demand</em></span><b class="alt">${fulfilment.toFixed(1)}%</b></div>
               <div class="cf-track"><i class="alt" style="width:${Math.max(fulfilment > 0 ? 1.5 : 0, pct(fulfilment))}%"></i></div>
             </div>
           </div>
@@ -1252,7 +1348,7 @@
 
     host.innerHTML = `
       <div class="cf-panel-head">
-        <div><h4>Output-first matching</h4></div>
+        <div><div class="cf-kick">Output</div><h4>Output-first matching</h4></div>
         <span class="cf-pill">LP match result</span>
       </div>
       ${blocks}
@@ -1349,8 +1445,6 @@
     document
       .querySelectorAll("#limitingTitle,#limitingText,.recipe-insight,.recipe-explanation,.limiting-factor")
       .forEach((node) => { node.style.display = "none"; });
-
-    if (lastResult) renderCompactDecisionChain(lastResult);
   }
 
   window.runRecipePreset = async function runRecipePreset(key) {
@@ -1420,10 +1514,10 @@
   function pinSize(node, kind) {
     if (kind === "source") {
       const g = Number(node?.generation_tpd?.value || 0);
-      return Math.round(20 + 12 * Math.sqrt(Math.min(1, g / 11500)));
+      return Math.round(22 + 12 * Math.sqrt(Math.min(1, g / 11500)));
     }
     const c = Number(node?.capacity_tpd?.value || 0);
-    return Math.round(24 + 10 * Math.sqrt(Math.min(1, c / 2400)));
+    return Math.round(26 + 10 * Math.sqrt(Math.min(1, c / 2400)));
   }
 
   function related(id) {

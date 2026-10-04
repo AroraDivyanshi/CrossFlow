@@ -10,7 +10,7 @@
  */
 (function (global) {
   const params = new URLSearchParams(location.search);
-  const BASE = params.get("api") || global.CROSSFLOW_API_BASE || "http://localhost:8000/api";
+  const BASE = params.get("api") || global.CROSSFLOW_API_BASE || "https://crossflow-jiy9.onrender.com/api";
 
   class ApiError extends Error {
     constructor(message, status, body) {

@@ -19,6 +19,7 @@ Endpoints:
   GET /api/pipeline/<scenario_name>?mode=demo|validated&capacity_mode=...
 """
 import json
+import os
 import sys
 import traceback
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -169,6 +170,9 @@ class Handler(BaseHTTPRequestHandler):
         self._respond(404, {"error": "not_found", "path": path,
                              "available_endpoints": [p for _, p, _ in ROUTES]})
 
+    # HEAD is answered exactly like GET (headers only) so host health probes don't get a 501.
+    do_HEAD = do_GET
+
     def _respond(self, status, body):
         payload = json.dumps(body, indent=2).encode("utf-8")
         self.send_response(status)
@@ -176,7 +180,8 @@ class Handler(BaseHTTPRequestHandler):
         self.send_header("Content-Length", str(len(payload)))
         self._cors()
         self.end_headers()
-        self.wfile.write(payload)
+        if self.command != "HEAD":
+            self.wfile.write(payload)
 
     def log_message(self, fmt, *args):
         sys.stderr.write("[api] " + (fmt % args) + "\n")
@@ -189,5 +194,6 @@ def run(port=8000):
 
 
 if __name__ == "__main__":
-    port = int(sys.argv[1]) if len(sys.argv) > 1 else 8000
+    # Port: CLI arg, else $PORT (set by most hosts), else 8000.
+    port = int(sys.argv[1]) if len(sys.argv) > 1 else int(os.environ.get("PORT", 8000))
     run(port)

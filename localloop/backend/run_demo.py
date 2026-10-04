@@ -13,6 +13,7 @@ output-demand matching -> economics -> explain chain via engine.pipeline.run_pip
 and writes a JSON dump to /mnt/user-data/outputs/.
 """
 import json
+import os
 import sys
 
 from engine.model import Field
@@ -68,8 +69,8 @@ def render(name="baseline"):
     if out["economics"]:
         e = out["economics"]
         print("\n-- 6. Economics / lifecycle impact --")
-        print(f"   total_annual_cost: Rs {e['costs_rs_per_year']['total_annual_cost']['value']:,.0f} "
-              f"[{e['costs_rs_per_year']['total_annual_cost']['label']}]")
+        print(f"   financial_cost: Rs {e['costs_rs_per_year']['financial_cost_rs_per_year']['value']:,.0f} "
+              f"[{e['costs_rs_per_year']['financial_cost_rs_per_year']['label']}]")
         print(f"   cost_per_tonne: Rs {e['costs_rs_per_year']['cost_per_tonne']['value']:,.1f} "
               f"[{e['costs_rs_per_year']['cost_per_tonne']['label']}]")
         print(f"   recovered_resource_value: Rs {e['recovered_resource_value_rs_per_year']['value']:,.0f} "
@@ -107,6 +108,10 @@ if __name__ == "__main__":
         return o
 
     out_clean = {k: v for k, v in out.items()}
-    with open(f"/mnt/user-data/outputs/localloop_pipeline_{name}_output.json", "w") as f:
+    # Output dir: $CROSSFLOW_OUTPUT_DIR, else /mnt/user-data/outputs if it exists, else the current directory.
+    out_dir = os.environ.get("CROSSFLOW_OUTPUT_DIR") or (
+        "/mnt/user-data/outputs" if os.path.isdir("/mnt/user-data/outputs") else ".")
+    out_path = os.path.join(out_dir, f"localloop_pipeline_{name}_output.json")
+    with open(out_path, "w") as f:
         json.dump(stringify(out_clean), f, indent=2, default=str)
-    print(f"\n[written /mnt/user-data/outputs/localloop_pipeline_{name}_output.json]")
+    print(f"\n[written {out_path}]")

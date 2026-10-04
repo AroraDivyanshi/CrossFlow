@@ -159,7 +159,9 @@ def explain_facility_decisions(inst: Instance, result: dict, baseline_result: di
                 reasons.append(f"RETROFIT_CHOSEN_WITHIN_BUDGET: annualised cost Rs {cost:,.0f}/yr adds {adds:.0f} TPD; "
                                 f"{comparison['reason']}")
         elif dec == "REROUTE":
-            if outaged:
+            if fid in outaged:
+                reasons.append(f"OUTAGE_CAUSED_REROUTE: {fid} is unavailable in this scenario, its flow is redirected to other facilities or landfill")
+            elif outaged:
                 reasons.append(f"OUTAGE_CAUSED_REROUTE: {outaged} unavailable in this scenario, flow redirected here")
             else:
                 reasons.append("ALLOCATION_CHANGED_DUE_TO_SCENARIO_INPUT_CHANGE (e.g. a generation surge), "
